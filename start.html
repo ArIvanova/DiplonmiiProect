@@ -1,0 +1,268 @@
+<html>
+
+<head>
+    <meta charset="UTF-8"> <!-- Определяем кодировку символов документа -->
+    <link rel="icon" href="images/favicon.ico">
+    <title>Главная страница</title> <!-- Задаем заголовок документа -->
+    <link rel="icon" href="icon_path" type="images/favicon.ico">
+    <link rel="stylesheet" type="text/css" href="style.css"> <!-- Подключаем внешнюю таблицу стилей -->
+    <script src="script.js">
+    </script>
+    <style>
+        body {
+            background-image: linear-gradient(45deg, #dce8dc, #c8f0d0);
+            font-family: "Figtree", sans-serif;
+        }
+
+        .background {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .mainblock {
+            background-color: #edcec5;
+            width: 90%;
+            height: 90%;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .activlink {
+            font-weight: bold;
+            color: white;
+            text-shadow: white 0 0 10px;
+        }
+
+        /*стиль для блока с меню*/
+        nav {
+            width: 100%;
+            height: 10%;
+            background-color: #295542;
+            border-radius: 15px 15px 0 0;
+            text-align: center;
+        }
+
+        /*стиль для основных пунктов меню меню*/
+        nav ul {
+            padding: 0;
+            list-style: none;
+            position: relative;
+        }
+
+        /*стиль для выравнивания в строку*/
+        nav ul li {
+            display: inline-block;
+
+        }
+
+        /*стиль для ссылок <a>*/
+        nav a {
+            padding: 0 20px;
+            display: block;
+            color: #FFF;
+            font-size: 20px;
+            text-decoration: none;
+            /*line-height: 10%;*/
+        }
+
+        /*стиль при наведении на ссылки*/
+        nav a:hover {
+            background-color: #000000;
+            border-radius: 15px;
+            margin-top: 2px;
+            margin-bottom: 2px;
+            font-weight: 600;
+        }
+
+        /*стиль для подппунктов основного меню*/
+        nav ul ul {
+            display: none;
+            position: absolute;
+            top: 100%;
+            background-color: #295542;
+            border-radius: 15px;
+            text-align: left;
+
+        }
+
+        nav ul li:hover>ul {
+            display: inherit;
+        }
+
+        nav ul ul li {
+            float: none;
+            display: list-item;
+            position: relative;
+        }
+
+        .startblock{
+            width: 95%;
+        }
+        .startblock p{
+            font-family: "Bebas Neue", cursive;
+            font-size: 16px;
+            text-align: justify;
+        }
+
+        .infoblocks {
+            height: 90%;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .infoblock {
+            background-color: white;
+            border-radius: 15px;
+            width: 27%;
+        }
+
+        figure {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            border-radius: 15px 15px 0 0;
+        }
+
+        img {
+            max-width: 100%;
+            max-height: 100%;
+            transform-origin: center;
+            transform: scale(var(--img-scale));
+        }
+
+        .blockcontent {
+            padding: 15px;
+            text-align: justify;
+        }
+
+        h2 {
+            font-family: "Bebas Neue", cursive;
+            margin-top: -15px;
+        }
+
+        .read-more {
+            display: inline-flex;
+            align-items: center;
+            text-decoration: none;
+            color: #295542;
+        }
+
+        p {
+            font-size: 1.1rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="background">
+        <div class="mainBlock">
+
+            <nav class="menu">
+                <ul>
+                    <li><a href="start.html" class="activlink">Главная</a></li>
+                    <li><a href="pages/firstblockonepage.html">Введение в БД</a>
+                        <ul>
+                            <li><a href="pages/firstblockonepage.html">Определение и назначение БД</a></li>
+                            <li><a href="pages/firstblocktwopage.html">ER (entity-relationship)-диаграммы</a></li>
+                            <li><a href="pages/firstblockthreepage.html">Нормализация баз данных</a></li>
+                            <li><a href="pages/firstblocktest.html">Итоговый тест</a></li>
+                            <li><a href="pages/firstblocktasks.html">Практические задания</a></li>
+                            <li><a href="pages/firstblocklinks.html">Полезные материалы</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="pages/secondblockonepage.html">Диаграммы UML</a>
+                        <ul>
+                            <li><a href="pages/secondblockonepage.html">Введение в язык UML</a></li>
+                            <li><a href="pages/secondblocktwopage.html">Основное о диаграммах UML</a></li>
+                            <li><a href="pages/secondblockthreepage.html">Построение диаграмм на ДЭ</a></li>
+                            <li><a href="pages/secondblocktest.html">Итоговый тест</a></li>
+                            <li><a href="pages/secondblocktasks.html">Практические задания</a></li>
+                            <li><a href="pages/secondblocklinks.html">Полезные материалы</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="pages/thirdblockoonepage">СУБД</a>
+                        <ul>
+                            <li><a href="pages/thirdblockonepage.html">Определение СУБД</a></li>
+                            <li><a href="pages/thirdblocktwopage.html">Создание БД</a></li>
+                            <li><a href="pages/thirdblockthreepage.html">Написание запросов</a></li>
+                            <li><a href="pages/thirdblocktest.html">Итоговый тест</a></li>
+                            <li><a href="pages/thirdblocktasks.html">Практические задания</a></li>
+                            <li><a href="pages/thirdblocklinks.html">Полезные материалы</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="startblock">
+                    <p>Веб-приложение содержит теоретическую информацию по 3м
+                    крупным направлениям: основы для проектирования баз данных, составление диаграмм UML и работа в
+                    системах управления баз данных. Весь материал позволяет подготовиться студентам к первому модулю демонстрационного экзамена  – «Проектирование баз данных». Также
+                    приложение предоставляет возможность закрепления полученных знаний путем прохождения контрольных
+                    мероприятий – тестов и выполнения практических заданий.</p>
+            </div>
+            <div class="infoblocks">
+                <div class="infoblock">
+                    <figure>
+                        <img src="images/imgdatabases.jpg" alt="">
+                    </figure>
+                    <div class="blockcontent">
+                        <h2>Введение в БД</h2>
+                        <p>
+                            В данном блоке описаны основные моменты для понимания баз данных, ее назначение, что такое
+                            er-диаграмма, а также что такое нормализация и какие нормальные формы существуют.
+                        </p>
+                        <a href="pages/firstblockonepage.html" class="read-more">
+                            Перейти к изучению
+                        </a>
+                    </div>
+                </div>
+                <div class="infoblock">
+                    <figure>
+                        <img src="images/imgUML.jpg" alt="" />
+                    </figure>
+                    <div class="blockcontent">
+                        <h2>Диаграммы UML</h2>
+                        <p>
+                            Этот блок поможет разобраться, для чего существует UML-язык, какие виды UML-диаграмм
+                            существуют, и как
+                            строить диаграммы для демонстрационного экзамена.
+                        </p>
+                        <a href="pages/secondblockonepage.html" class="read-more">
+                            Перейти к изучению
+                        </a>
+                    </div>
+                </div>
+                <div class="infoblock">
+                    <figure>
+                        <img src="images/imgSUBD.jpg" alt="" />
+                    </figure>
+                    <div class="blockcontent">
+                        <h2>СУБД</h2>
+                        <p>
+                            Это тот блок, который подскажет как работать в системах управления баз данных, как
+                            реализовывать
+                            таблицы, как к ним писать запросы, и как создать схему диаграмму данных.
+                        </p>
+                        <a href="#" class="read-more">
+                            Перейти к изучению
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+
+</html>

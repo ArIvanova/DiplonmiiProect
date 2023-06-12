@@ -1,0 +1,270 @@
+<html>
+
+<head>
+    <meta charset="UTF-8"> <!-- Определяем кодировку символов документа -->
+    <link rel="icon" href="../images/favicon.ico">
+    <title>Практические задания</title> <!-- Задаем заголовок документа -->
+    <link rel="stylesheet" type="text/css" href="style.css"> <!-- Подключаем внешнюю таблицу стилей -->
+    <script>
+        function jobSwitching1() {
+            document.getElementById("task2").classList.remove('activlink');
+            document.getElementById("task3").classList.remove('activlink');
+            document.getElementById("task1").classList.add('activlink');
+            document.getElementById("textAIS").innerHTML = "<span>Автоматизированная информационная система «Рыболовная фирма»</span>";
+            document.getElementById("textTema").innerHTML = "Рыболовная фирма";
+            document.getElementById("textDesc").innerHTML = "Рыболовной фирме принадлежит небольшая флотилия рыболовных судов. Каждое судно имеет «паспорт», куда занесены его название, тип, водоизмещение и дата постройки. Фирма регистрирует каждый выход на лов, записывая название судна, имена и адреса членов команды с указанием их должностей (капитан, боцман и т. д.), даты выхода и возвращения, а также вес пойманной рыбы отдельно по разным видам рыб. За время одного рейса судно может посетить несколько мест лова. Фиксируется дата прихода на каждое место лова и дата отплытия, качество выловленной рыбы (отличное, хорошее, плохое). Требуется вести учет и получать информацию из базы данных по различным запросам, в том числе и с выводом на печать.АИС включает в себя: меню приложения и средства диалога, формы ввода и изменения данных,запросы, отчеты для вывода на печать.";
+        }
+        function jobSwitching2() {
+            document.getElementById("task1").classList.remove('activlink');
+            document.getElementById("task3").classList.remove('activlink');
+            document.getElementById("task2").classList.add('activlink');
+            document.getElementById("textAIS").innerHTML = "<span>Автоматизированная информационная система «Альпинистский клуб»</span>";
+            document.getElementById("textTema").innerHTML = "Альпинистский клуб";
+            document.getElementById("textDesc").innerHTML = "В альпинистском клубе ведется учет восхождений. Записываются даты начала и конца завершения каждого восхождения, имена и адреса, участвовавших в нем альпинистов, название и высота горы, страна и регион, где она расположена. Требуется вести учет восхождений и получать сведения из базы данных по различным запросам, в том числе и с выводом на печать.АИС включает в себя: меню приложения и средства диалога, формы ввода и изменения данных, запросы, отчеты для вывода на печать.";
+        }
+        function jobSwitching3() {
+            document.getElementById("task1").classList.remove('activlink');
+            document.getElementById("task2").classList.remove('activlink');
+            document.getElementById("task3").classList.add('activlink');
+            document.getElementById("textAIS").innerHTML = "<span>Автоматизированная информационная система «Склад»</span>";
+            document.getElementById("textTema").innerHTML = "Склад";
+            document.getElementById("textDesc").innerHTML = "Оптовый склад принимает партии товаров от поставщиков и отпускает его клиентам мелкими партиями. Требуется вести (количественный и/или стоимостный) учет поступающих и отпускаемых товаров, учет поставщиков и клиентов, печатать приходные и расходные накладные. В реальной ситуации также требуется вести бухгалтерские взаиморасчеты склада с поставщиками и клиентами.АИС включает в себя: меню приложения и средства диалога, формы ввода и изменения данных, запросы, отчеты для вывода на печать.";
+        }
+    </script>
+    <style>
+        body {
+            background-image: linear-gradient(45deg, #dce8dc, #c8f0d0);
+            font-family: "Figtree", sans-serif;
+        }
+
+        .background {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .mainblock {
+            background-color: #edcec5;
+            width: 90%;
+            height: 90%;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .activlink {
+            font-weight: bold;
+            color: white;
+            text-shadow: white 0 0 10px;
+        }
+
+        nav {
+            width: 100%;
+            height: 10%;
+            background-color: #295542;
+            border-radius: 15px 15px 0 0;
+            text-align: center;
+        }
+
+        nav ul {
+            padding: 0;
+            list-style: none;
+            position: relative;
+        }
+
+        nav ul li {
+            display: inline-block;
+
+        }
+
+        nav a {
+            padding: 0 20px;
+            display: block;
+            color: #FFF;
+            font-size: 20px;
+            text-decoration: none;
+            /*line-height: 10%;*/
+        }
+
+        nav a:hover {
+            background-color: #000000;
+            border-radius: 15px;
+            margin-top: 2px;
+            margin-bottom: 2px;
+            font-weight: 600;
+        }
+
+        nav ul ul {
+            display: none;
+            position: absolute;
+            top: 100%;
+            background-color: #295542;
+            border-radius: 15px;
+            text-align: left;
+
+        }
+
+        nav ul li:hover>ul {
+            display: inherit;
+        }
+
+        nav ul ul li {
+            float: none;
+            display: list-item;
+            position: relative;
+        }
+
+        .verh {
+            align-self: flex-start;
+        }
+
+        ul.breadcrumb {
+            padding: 10px 16px;
+            list-style: none;
+        }
+
+        ul.breadcrumb li {
+            display: inline;
+            font-size: 18px;
+        }
+
+        ul.breadcrumb li+li:before {
+            padding: 8px;
+            color: black;
+            content: "/\00a0";
+        }
+
+        ul.breadcrumb li a {
+            color: #295542;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        ul.breadcrumb li a:hover {
+            color: #214536;
+            text-decoration: underline;
+        }
+
+        .infoblocks {
+            height: 90%;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-y: scroll;
+        }
+
+        div.infotext {
+            background-color: white;
+            border-radius: 15px;
+            width: 90%;
+            padding: 3%;
+            text-align: justify;
+        }
+
+        div.infotext p {
+            font-family: "Figtree", sans-serif;
+            font-size: 20px;
+        }
+
+        span {
+            font-weight: 600;
+        }
+
+        button {
+            background-color: #295542;
+            color: white;
+            font-size: 20px;
+            width: 100px;
+            height: 35px;
+            border-radius: 15px;
+            margin-top: 30px;
+            margin-bottom: 30px;
+            cursor: pointer;
+        }
+
+        div.btntasks button {
+            width: 200px;
+            margin-top: 0px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="background">
+        <div class="mainBlock">
+
+            <nav class="menu">
+                <ul>
+                    <li><a href="../start.html">Главная</a></li>
+                    <li><a href="firstblockonepage.html">Введение в БД</a>
+                        <ul>
+                            <li><a href="firstblockonepage.html">Определение и назначение БД</a></li>
+                            <li><a href="firstblocktwopage.html">ER (entity-relationship)-диаграммы</a></li>
+                            <li><a href="firstblockthreepage.html">Нормализация баз данных</a></li>
+                            <li><a href="firstblocktest.html">Итоговый тест</a></li>
+                            <li><a href="firstblocktasks.html">Практические задания</a></li>
+                            <li><a href="firstblocklinks.html">Полезные материалы</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="secondblockonepage.html" class="activlink">Диаграммы UML</a>
+                        <ul>
+                            <li><a href="secondblockonepage.html">Введение в язык UML</a></li>
+                            <li><a href="secondblocktwopage.html">Основное о диаграммах UML</a></li>
+                            <li><a href="secondblockthreepage.html">Построение диаграмм на ДЭ</a></li>
+                            <li><a href="secondblocktest.html">Итоговый тест</a></li>
+                            <li><a href="secondblocktasks.html" class="activlink">Практические задания</a></li>
+                            <li><a href="secondblocklinks.html">Полезные материалы</a></li>
+                        </ul>
+                    <li><a href="#">СУБД</a></li>
+                </ul>
+            </nav>
+
+            <div class="infoblocks">
+                <div class="verh">
+                    <ul class="breadcrumb">
+                        <li><a href="secondblockonepage.html">Диаграммы UML</a></li>
+                        <li>Практические задания</li>
+                    </ul>
+                </div>
+                <div class="btntasks">
+                    <button id="task1" class="activlink" onclick="jobSwitching1()">Задание №1</button>
+                    <button id="task2" onclick="jobSwitching2()">Задание №2</button>
+                    <button id="task3" onclick="jobSwitching3()">Задание №3</button>
+                </div>
+                <div class="infotext">
+                    <p><span>Задание:</span><i> необходимо создать диаграмму вариантов использования (USECASE) и
+                            диаграмму последовательности (SEQUENCE) по предметной области.</i></p>
+                    <p id="textAIS"><span>Автоматизированная информационная система «Рыболовная фирма»</span></p>
+                    <p id="textTema">Рыболовная фирма</p>
+                    <p id="textDesc">Рыболовной фирме принадлежит небольшая флотилия рыболовных судов. Каждое судно
+                        имеет «паспорт», куда занесены его название, тип, водоизмещение и дата постройки. Фирма
+                        регистрирует каждый выход на лов, записывая название судна, имена и адреса членов команды с
+                        указанием их должностей (капитан, боцман и т. д.), даты выхода и возвращения, а также вес
+                        пойманной рыбы отдельно по разным видам рыб. За время одного рейса судно может посетить
+                        несколько мест лова. Фиксируется дата прихода на каждое место лова и дата отплытия, качество
+                        выловленной рыбы (отличное, хорошее, плохое). Требуется вести учет и получать информацию из базы
+                        данных по различным запросам, в том числе и с выводом на печать.
+                        АИС включает в себя: меню приложения и средства диалога, формы ввода и изменения данных,
+                        запросы, отчеты для вывода на печать
+                    </p>
+                </div>
+                <div class="btnstransition">
+                    <button onclick="document.location='secondblocktest.html'">Назад</button>
+                    <button onclick="document.location='secondblocklinks.html'">Далее</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,454 @@
+<html>
+
+<head>
+  <meta charset="UTF-8"> <!-- Определяем кодировку символов документа -->
+  <link rel="icon" href="../images/favicon.ico">
+  <title>Тест по первому блоку</title> <!-- Задаем заголовок документа -->
+  <link rel="stylesheet" type="text/css" href="style.css"> <!-- Подключаем внешнюю таблицу стилей -->
+  <script>
+    function testCount() {
+      const
+        test = document.querySelector(".test"), //поиск по страницу элемента с классом .test
+        questionsCount = test.querySelectorAll("ul").length, //подсчет количества вопросов
+        checked = test.querySelectorAll("input:checked"), //поиск всех ответов, которые выбрал пользователь
+        checkedCount = checked.length, //подсчет выбранных ответов
+        //поиск на странице выбранных пользователей ответов, но с классом right (правильный ответ)
+        right = test.querySelectorAll("li.right input:checked"),
+        rightCount = right.length //подсчет правильных ответов
+        ;
+        //вывод модального окна с результатом
+      alert(`Вопросов в тесте: ${questionsCount}
+Верных ответов: ${rightCount}, процент выполнения: ${(rightCount / questionsCount * 100).toFixed(0)}%
+`)
+    }
+  </script>
+  <style>
+    body {
+      background-image: linear-gradient(45deg, #dce8dc, #c8f0d0);
+      font-family: "Figtree", sans-serif;
+    }
+
+    .background {
+      height: 100%;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .mainblock {
+      background-color: #edcec5;
+      width: 90%;
+      height: 90%;
+      border-radius: 15px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .activlink {
+      font-weight: bold;
+      color: white;
+      text-shadow: white 0 0 10px;
+    }
+
+    nav {
+      width: 100%;
+      height: 10%;
+      background-color: #295542;
+      border-radius: 15px 15px 0 0;
+      text-align: center;
+    }
+
+    nav ul {
+      padding: 0;
+      list-style: none;
+      position: relative;
+    }
+
+    nav ul li {
+      display: inline-block;
+
+    }
+
+    nav a {
+      padding: 0 20px;
+      display: block;
+      color: #FFF;
+      font-size: 20px;
+      text-decoration: none;
+      /*line-height: 10%;*/
+    }
+
+    nav a:hover {
+      background-color: #000000;
+      border-radius: 15px;
+      margin-top: 2px;
+      margin-bottom: 2px;
+      font-weight: 600;
+    }
+
+    nav ul ul {
+      display: none;
+      position: absolute;
+      top: 100%;
+      background-color: #295542;
+      border-radius: 15px;
+      text-align: left;
+
+    }
+
+    nav ul li:hover>ul {
+      display: inherit;
+    }
+
+    nav ul ul li {
+      float: none;
+      display: list-item;
+      position: relative;
+    }
+
+    .verh {
+      align-self: flex-start;
+    }
+
+    ul.breadcrumb {
+      padding: 10px 16px;
+      list-style: none;
+    }
+
+    ul.breadcrumb li {
+      display: inline;
+      font-size: 18px;
+    }
+
+    ul.breadcrumb li+li:before {
+      padding: 8px;
+      color: black;
+      content: "/\00a0";
+    }
+
+    ul.breadcrumb li a {
+      color: #295542;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    ul.breadcrumb li a:hover {
+      color: #214536;
+      text-decoration: underline;
+    }
+
+    .infoblocks {
+      height: 90%;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow-y: scroll;
+    }
+
+    div.infotext {
+      background-color: white;
+      border-radius: 15px;
+      width: 90%;
+      padding: 3%;
+      text-align: justify;
+    }
+
+    div.infotext p {
+      font-family: "Figtree", sans-serif;
+      font-size: 20px;
+    }
+
+    div.infotext ul {
+      font-family: "Figtree", sans-serif;
+      font-size: 20px;
+    }
+
+    div.infotext ol {
+      font-family: "Figtree", sans-serif;
+      font-size: 20px;
+    }
+
+    span {
+      font-weight: 600;
+    }
+
+    button {
+      background-color: #295542;
+      color: white;
+      font-size: 20px;
+      width: 140px;
+      height: 35px;
+      border-radius: 15px;
+      margin-top: 30px;
+      cursor: pointer;
+    }
+
+    .btnstransition {
+      margin-bottom: 20px;
+    }
+
+    article ol li ul {
+      list-style-type: none;
+    }
+
+    article ol li {
+      margin-top: 10px;
+    }
+
+    .borderquesrion {
+      border: 2px solid #295542;
+      border-radius: 15px;
+      padding-left: 5%;
+      padding-right: 5%;
+      padding-bottom: 10px;
+      margin-bottom: 5px;
+      ;
+    }
+
+    input[type=button] {
+      background-color: #295542;
+      color: white;
+      font-size: 20px;
+      width: 200px;
+      height: 40px;
+      border-radius: 15px;
+      cursor: pointer;
+      float: right
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="background">
+    <div class="mainBlock">
+
+      <nav class="menu">
+        <ul>
+          <li><a href="../start.html">Главная</a></li>
+          <li><a href="firstblockonepage.html" class="activlink">Введение в БД</a>
+            <ul>
+              <li><a href="firstblockonepage.html">Определение и назначение БД</a></li>
+              <li><a href="firstblocktwopage.html">ER (entity-relationship)-диаграммы</a></li>
+              <li><a href="firstblockthreepage.html">Нормализация баз данных</a></li>
+              <li><a href="firstblocktest.html" class="activlink">Итоговый тест</a></li>
+              <li><a href="firstblocktasks.html">Практические задания</a></li>
+              <li><a href="firstblocklinks.html">Полезные материалы</a></li>
+            </ul>
+          </li>
+          <li><a href="secondblockonepage.html">Диаграммы UML</a>
+            <ul>
+              <li><a href="secondblockonepage.html">Введение в язык UML</a></li>
+              <li><a href="secondblocktwopage.html">Основное о диаграммах UML</a></li>
+              <li><a href="secondblockthreepage.html">Построение диаграмм на ДЭ</a></li>
+              <li><a href="secondblocktest.html">Итоговый тест</a></li>
+              <li><a href="secondblocktasks.html">Практические задания</a></li>
+              <li><a href="secondblocklinks.html">Полезные материалы</a></li>
+            </ul>
+          </li>
+          <li><a href="#">СУБД</a></li>
+        </ul>
+      </nav>
+
+      <div class="infoblocks">
+        <div class="verh">
+          <ul class="breadcrumb">
+            <li><a href="firstblockonepage.html">Введение в БД</a></li>
+            <li>Итоговый тест</li>
+          </ul>
+        </div>
+        <div class="infotext">
+          <article class="test">
+            <ol>
+              <diV class="borderquesrion">
+                <li>Какие основные функции выполняет БД?
+                  <ul>
+                    <li><label><input type="radio" name="q1">Сбор и хранение информации</label></li>
+                    <li><label><input type="radio" name="q1">Манипулирование информацией</label></li>
+                    <li><label><input type="radio" name="q1">Обработка информации</label></li>
+                    <li class="right"><label><input type="radio" name="q1">Все вышеперечисленное</label></li>
+                  </ul>
+                </li>
+              </diV>
+
+              <diV class="borderquesrion">
+                <li>Что такое база данных?
+                  <ul>
+                    <li><label><input type="radio" name="q2">Способ хранения информации на компьютере</label></li>
+                    <li class="right"><label><input type="radio" name="q2">Организованная структура для хранения
+                        информации</label></li>
+                    <li><label><input type="radio" name="q2">Специальное приложение для работы с информацией</label>
+                    </li>
+                    <li><label><input type="radio" name="q2">Файловая структура ПК</label></li>
+                  </ul>
+                </li>
+              </diV>
+
+              <diV class="borderquesrion">
+                <li>Преимуществом хранения информации в таблицах не является...
+                  <ul>
+                    <li><label><input type="radio" name="q3">Наличие возможности хранения в одном месте всей
+                        информации</label></li>
+                    <li class="right"><label><input type="radio" name="q3">Захламление базы данных</label></li>
+                    <li><label><input type="radio" name="q3">Сокращение времени и ресурсов на поиск необходимых
+                        данных</label></li>
+                    <li><label><input type="radio" name="q3">Отсутствие дублирования информации</label></li>
+                  </ul>
+                </li>
+              </diV>
+
+              <diV class="borderquesrion">
+                <li>Что такое ER-диаграмма?
+                  <ul>
+                    <li><label><input type="radio" name="q4">Текстовое описание сущностей, атрибутов и связей между
+                        ними</label></li>
+                    <li><label><input type="radio" name="q4">Диаграмма, описывающая отношение пользователя и
+                        информационной системы</label></li>
+                    <li><label><input type="radio" name="q4">Специальный инструмент для хранения информации</label></li>
+                    <li class="right"><label><input type="radio" name="q4">Графическое представление сущностей,
+                        атрибутов и связей между ними</label></li>
+                  </ul>
+                </li>
+              </diV>
+
+              <diV class="borderquesrion">
+                <li>Что изображается на ER-диаграмме в виде прямоугольника?
+                  <ul>
+                    <li><label><input type="radio" name="q5">Атрибуты</label></li>
+                    <li><label><input type="radio" name="q5">Связи</label></li>
+                    <li><label><input type="radio" name="q5">Название базы данных</label></li>
+                    <li class="right"><label><input type="radio" name="q5">Сущности</label></li>
+                  </ul>
+                </li>
+              </diV>
+
+              <diV class="borderquesrion">
+                <li>Что такое сущность?
+                  <ul>
+                    <li><label><input type="radio" name="q6">Пользователь системы, имеющий ряд функций при работе в
+                        приложении </label></li>
+                    <li><label><input type="radio" name="q6">Класс реальных или виртуальных объектов, информацию о
+                        необходимо изменять при работе с БД</label></li>
+                    <li><label><input type="radio" name="q6">Понятие для объединения атрибутов и связей </label></li>
+                    <li class="right"><label><input type="radio" name="q6">Класс реальных или виртуальных объектов,
+                        информацию о которых необходимо хранить в БД</label></li>
+                  </ul>
+                </li>
+              </diV>
+
+              <diV class="borderquesrion">
+                <li>Что такое связь?
+                  <ul>
+                    <li class="right"><label><input type="radio" name="q7">Ассоциация между сущностями</label></li>
+                    <li><label><input type="radio" name="q7">Атрибут сущности</label></li>
+                    <li><label><input type="radio" name="q7">Передача информации между сущностями</label></li>
+                    <li><label><input type="radio" name="q7">Диаграмма базы данных</label></li>
+                  </ul>
+                </li>
+              </diV>
+
+              <diV class="borderquesrion">
+                <li>Какие основные шаги следует выполнить при построении ER-диаграммы?
+                  <ul>
+                    <li><label><input type="radio" name="q8">Определить цель и область применения, определить сущности,
+                        определить связи, показать кратность связей</label></li>
+                    <li><label><input type="radio" name="q8">Определить цель и область применения, нарисовать
+                        прямоугольники и написать названия сущностей</label></li>
+                    <li class="right"><label><input type="radio" name="q8">Определить цель и область применения,
+                        определить сущности, определить связи, добавить ключевые атрибуты, показать кратность
+                        связей</label></li>
+                    <li><label><input type="radio" name="q8">Определить сущности и связи, добавить ключевые атрибуты,
+                        показать кратность связей</label></li>
+                  </ul>
+                </li>
+              </diV>
+
+              <diV class="borderquesrion">
+                <li>Какой вид связи используется, когда одной записи в родительской таблице соответствует более одной
+                  записи дочерней?
+                  <ul>
+                    <li><label><input type="radio" name="q9">Один-к-одному</label></li>
+                    <li class="right"><label><input type="radio" name="q9">Один-ко-многим</label></li>
+                    <li><label><input type="radio" name="q9">Многие-ко-многим</label></li>
+                    <li><label><input type="radio" name="q9">Ни один из вышеперечисленных</label></li>
+                  </ul>
+                </li>
+              </diV>
+
+              <diV class="borderquesrion">
+                <li>Что должен содержать один из атрибутов сущности?
+                  <ul>
+                    <li class="right"><label><input type="radio" name="q10">Ключ</label></li>
+                    <li><label><input type="radio" name="q10">Связь</label></li>
+                    <li><label><input type="radio" name="q10">Свойство</label></li>
+                    <li><label><input type="radio" name="q10">Все вышеперечисленное</label></li>
+                  </ul>
+                </li>
+              </diV>
+
+              <diV class="borderquesrion">
+                <li>Что такое первая нормальная форма?
+                  <ul>
+                    <li class="right"><label><input type="radio" name="q11">Каждый атрибут должен быть атомарным</label>
+                    </li>
+                    <li><label><input type="radio" name="q11">Каждый атрибут должен зависеть от первичного ключа
+                        таблицы</label></li>
+                    <li><label><input type="radio" name="q11">Каждый неключевой атрибут должен зависеть только от
+                        первичного ключа таблицы</label></li>
+                    <li><label><input type="radio" name="q11">Каждый неключевой атрибут должен зависеть только от
+                        первичного ключа таблицы и не должен зависеть от других неключевых атрибутов</label></li>
+                  </ul>
+                </li>
+              </diV>
+
+              <diV class="borderquesrion">
+                <li>Что такое вторая нормальная форма?
+                  <ul>
+                    <li><label><input type="radio" name="q12">Каждый атрибут должен быть атомарным</label></li>
+                    <li class="right"><label><input type="radio" name="q12">Каждый атрибут должен зависеть от первичного
+                        ключа таблицы</label></li>
+                    <li><label><input type="radio" name="q12">Каждый неключевой атрибут должен зависеть только от
+                        первичного ключа таблицы</label></li>
+                    <li><label><input type="radio" name="q12">Каждый неключевой атрибут должен зависеть только от
+                        первичного ключа таблицы и не должен зависеть от других неключевых атрибутов</label></li>
+                  </ul>
+                </li>
+              </diV>
+
+              <diV class="borderquesrion">
+                <li>Что такое третья нормальная форма?
+                  <ul>
+                    <li><label><input type="radio" name="q13">Каждый атрибут должен быть атомарным</label></li>
+                    <li><label><input type="radio" name="q13">Каждый атрибут должен зависеть от первичного ключа
+                        таблицы</label></li>
+                    <li class="right"><label><input type="radio" name="q13">Каждый неключевой атрибут должен зависеть
+                        только от первичного ключа таблицы</label></li>
+                    <li><label><input type="radio" name="q13">Каждый неключевой атрибут должен зависеть только от
+                        первичного ключа таблицы и не должен зависеть от других неключевых атрибутов</label></li>
+                  </ul>
+                </li>
+              </diV>
+
+            </ol>
+          </article>
+
+          <input type="button" value="Посчитать" onclick="testCount( )">
+
+        </div>
+        <div class="btnstransition">
+          <button onclick="document.location='firstblockthreepage.html'">К теории</button>
+          <button onclick="document.location='firstblocktasks.html'">К заданиям</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+</body>
+
+</html>

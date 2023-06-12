@@ -1,0 +1,712 @@
+<html>
+
+<head>
+    <meta charset="UTF-8"> <!-- Определяем кодировку символов документа -->
+    <link rel="icon" href="../images/favicon.ico">
+    <title>Построение диаграмм на ДЭ</title> <!-- Задаем заголовок документа -->
+    <link rel="stylesheet" type="text/css" href="style.css"> <!-- Подключаем внешнюю таблицу стилей -->
+    <script src="script.js">
+    </script>
+    <style>
+        body {
+            background-image: linear-gradient(45deg, #dce8dc, #c8f0d0);
+            font-family: "Figtree", sans-serif;
+        }
+
+        .background {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .mainblock {
+            background-color: #edcec5;
+            width: 90%;
+            height: 90%;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .activlink {
+            font-weight: bold;
+            color: white;
+            text-shadow: white 0 0 10px;
+        }
+
+        nav {
+            width: 100%;
+            height: 10%;
+            background-color: #295542;
+            border-radius: 15px 15px 0 0;
+            text-align: center;
+        }
+
+        nav ul {
+            padding: 0;
+            list-style: none;
+            position: relative;
+        }
+
+        nav ul li {
+            display: inline-block;
+
+        }
+
+        nav a {
+            padding: 0 20px;
+            display: block;
+            color: #FFF;
+            font-size: 20px;
+            text-decoration: none;
+            /*line-height: 10%;*/
+        }
+
+        nav a:hover {
+            background-color: #000000;
+            border-radius: 15px;
+            margin-top: 2px;
+            margin-bottom: 2px;
+            font-weight: 600;
+        }
+
+        nav ul ul {
+            display: none;
+            position: absolute;
+            top: 100%;
+            background-color: #295542;
+            border-radius: 15px;
+            text-align: left;
+            z-index: 1;
+        }
+
+        nav ul li:hover>ul {
+            display: inherit;
+        }
+
+        nav ul ul li {
+            float: none;
+            display: list-item;
+            position: relative;
+        }
+
+        .verh {
+            align-self: flex-start;
+        }
+
+        ul.breadcrumb {
+            padding: 10px 16px;
+            list-style: none;
+        }
+
+        ul.breadcrumb li {
+            display: inline;
+            font-size: 18px;
+        }
+
+        ul.breadcrumb li+li:before {
+            padding: 8px;
+            color: black;
+            content: "/\00a0";
+        }
+
+        ul.breadcrumb li a {
+            color: #295542;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        ul.breadcrumb li a:hover {
+            color: #214536;
+            text-decoration: underline;
+        }
+
+        .infoblocks {
+            height: 90%;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-y: scroll;
+        }
+
+        .info7NF {
+            width: 70%;
+            border: 2px solid #295542;
+            border-radius: 15px;
+            margin-left: 10%;
+            margin-right: 10%;
+            padding-left: 5%;
+            padding-right: 5%;
+        }
+
+        div.info7NF ul {
+            font-style: italic;
+        }
+
+        div.infotext {
+            background-color: white;
+            border-radius: 15px;
+            width: 90%;
+            padding: 3%;
+            text-align: justify;
+        }
+
+        div.infotext p {
+            font-family: "Figtree", sans-serif;
+            font-size: 20px;
+        }
+
+        div.infotext ul {
+            font-family: "Figtree", sans-serif;
+            font-size: 20px;
+        }
+
+        div.infotext ol {
+            font-family: "Figtree", sans-serif;
+            font-size: 20px;
+        }
+
+        span {
+            font-weight: 600;
+        }
+
+        button {
+            background-color: #295542;
+            color: white;
+            font-size: 20px;
+            width: 100px;
+            height: 35px;
+            border-radius: 15px;
+            margin-top: 30px;
+            cursor: pointer;
+        }
+
+        .line {
+            border-bottom: 2px solid #295542;
+        }
+
+        .btnstransition {
+            margin-bottom: 20px;
+        }
+
+        .notborder {
+            background-color: white;
+            border: none;
+            color: #000000;
+        }
+
+        .tab {
+            overflow: hidden;
+            border: 1px solid #ccc;
+            background-color: #dce8dc;
+            text-align: center;
+            max-height: fit-content;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+        }
+
+        /* Style the buttons inside the tab */
+        .tab button {
+            background-color: #dce8dc;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            width: 50%;
+            height: auto;
+            color: #000000;
+            margin-top: 0px;
+            border-bottom-left-radius: 0px;
+            border-bottom-right-radius: 0px;
+            padding: 7px 0;
+        }
+
+        .tab button:hover {
+            background-color: #edcec5;
+        }
+
+
+        .tab button.active {
+            background-color: #5e3a32;
+            color:white;
+        }
+
+        .tabcontent {
+            display: none;
+            padding: 6px 12px;
+            border: 1px solid #ccc;
+            border-top: none;
+            text-align: justify;
+        }
+
+        .ListDiagramsUC li {
+            margin-bottom: 10px;
+            margin-left: 5px;
+            list-style: none;
+            position: relative;
+
+        }
+
+        .ListDiagramsUC li::before {
+            content: "";
+            position: absolute;
+            background: #214536;
+            width: 20px;
+            height: 3px;
+            margin-left: -25px;
+            margin-top: 10px;
+        }
+
+        #myImg1,
+        #myImg2,
+        #myImg3,
+        #myImg4,
+        #myImg5 {
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        #myImg1,
+        #myImg2,
+        #myImg3,
+        #myImg4,
+        #myImg5:hover {
+            opacity: 0.7;
+        }
+
+        .modalImg {
+            display: none;
+            position: fixed;
+            padding-top: 100px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0, 0, 0);
+            background-color: rgba(0, 0, 0, 0.9);
+        }
+
+        .modal-content {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 700px;
+        }
+
+        #caption {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 700px;
+            text-align: center;
+            color: #ccc;
+            padding: 10px 0;
+            height: 150px;
+        }
+
+        .modal-content,
+        #caption {
+            -webkit-animation-name: zoom;
+            -webkit-animation-duration: 0.6s;
+            animation-name: zoom;
+            animation-duration: 0.6s;
+        }
+
+        @-webkit-keyframes zoom {
+            from {
+                -webkit-transform: scale(0)
+            }
+
+            to {
+                -webkit-transform: scale(1)
+            }
+        }
+
+        @keyframes zoom {
+            from {
+                transform: scale(0)
+            }
+
+            to {
+                transform: scale(1)
+            }
+        }
+
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="background">
+        <div class="mainBlock">
+
+            <nav class="menu">
+                <ul>
+                    <li><a href="../start.html">Главная</a></li>
+                    <li><a href="firstblockonepage.html">Введение в БД</a>
+                        <ul>
+                            <li><a href="firstblockonepage.html">Определение и назначение БД</a></li>
+                            <li><a href="firstblocktwopage.html">ER (entity-relationship)-диаграммы</a></li>
+                            <li><a href="firstblockthreepage.html">Нормализация баз данных</a></li>
+                            <li><a href="firstblocktest.html">Итоговый тест</a></li>
+                            <li><a href="firstblocktasks.html">Практические задания</a></li>
+                            <li><a href="firstblocklinks.html">Полезные материалы</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="secondblockonepage.html" class="activlink">Диаграммы UML</a>
+                        <ul>
+                            <li><a href="secondblockonepage.html">Введение в язык UML</a></li>
+                            <li><a href="secondblocktwopage.html">Основное о диаграммах UML</a></li>
+                            <li><a href="secondblockthreepage.html" class="activlink">Построение диаграмм на ДЭ</a></li>
+                            <li><a href="secondblocktest.html">Итоговый тест</a></li>
+                            <li><a href="secondblocktasks.html">Практические задания</a></li>
+                            <li><a href="secondblocklinks.html">Полезные материалы</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#">СУБД</a></li>
+                </ul>
+            </nav>
+
+            <div class="infoblocks">
+                <div class="verh">
+                    <ul class="breadcrumb">
+                        <li><a href="secondblockonepage.html">Диаграммы UML</a></li>
+                        <li>Построение диаграмм на ДЭ</li>
+                    </ul>
+                </div>
+                <div class="infotext">
+                    <div class="tab">
+                        <button class="tablinks" onclick="openElement(event, 'usecaseBlock')">ДИАГРАММА ВАРИАНТОВ
+                            ИСПОЛЬЗОВАНИЯ<br>(USECASE DIAGRAM)</button>
+                        <button class="tablinks" onclick="openElement(event, 'sequenceBlock')">ДИАГРАММА
+                            ПОСЛЕДОВАТЕЛЬНОСТИ<br>(SEQUENCE DIAGRAM)</button>
+                    </div>
+
+                    <div id="usecaseBlock" class="tabcontent">
+                        <p>Диаграмма, отражающая отношения между актерами и прецедентами и являющаяся составной частью
+                            модели прецедентов, позволяющей описать систему на концептуальном уровне.
+                        </p>
+                        <p>
+                            Основные обозначения:
+                        </p>
+                        <div style="text-align: center;">
+                            <img src="../images/ObjDgrUC.png" id="myImg4" alt="Виды объектов диаграммы последовательности" width="600px">
+                        </div>
+                        <ul>
+                            <li>
+                                Вариант использования (<i>use case</i>)
+                            </li>
+                        </ul>
+                        <p>
+                            <img src="../images/ElemUsecase.png" align="right" vspace="5"
+                                hspace="5" height="100px;">
+                            Представляет собой общую спецификацию совокупности выполняемых системой действий с целью
+                            предоставления некоторого наблюдаемого результата, который имеет значение для одного или
+                            нескольких актеров.
+                        </p>
+                        <p>
+                            Отвечает на вопрос «Что должна выполнять система?», не отвечая на вопрос «Как она должна выполнять это?».
+                        </p>
+                        <p>
+                            Имена – отглагольное существительное или глагол в неопределенной форме.
+                        </p>
+                        <ul>
+                            <li>
+                                Актер (<i>actor</i>)
+                            </li>
+                        </ul>
+                        <p>
+                            <img src="../images/ElemActor.png" align="right" vspace="5"
+                            hspace="5" height="110px;">
+                            Любая внешняя по отношению к проектируемой системе сущность, которая взаимодействует с системой и использует ее функциональные возможности для достижения определенных целей или решения частных задач. 
+                        </p>
+                        <p>
+                            Примеры актеров: кассир, клиент банка, банковский служащий, президент, продавец магазина, менеджер отдела продаж, пассажир авиарейса, водитель автомобиля, администратор гостиницы, сотовый телефон.
+                        </p>
+                        <ul>
+                            <li>
+                                Отношения
+                            </li>
+                        </ul>
+                        <ul class="ListDiagramsUC">
+                            <li>
+                                Отношение ассоциации
+                                <p>
+                                    <img src="../images/ElemAssociation.png" align="right" vspace="5"
+                                    hspace="5" height="105px;">
+                                    Ассоциация (association) является одним из фундаментальных понятий в языке UML 2.х и может использоваться на различных канонических диаграммах при построении визуальных моделей
+                                </p>
+                                <p>
+                                    Применительно к диаграммам вариантов использования отношение ассоциации может служить только для обозначения взаимодействия актера с вариантом использования. 
+                                </p>
+                            </li>
+                            <li>
+                                Отношение включения<img src="../images/ElemInclude.png" align="right" vspace="5"
+                                    hspace="5" height="105px;">
+                                <p>
+                                    
+                                    Отношение включения (include) специфицирует тот факт, что некоторый вариант использования содержит поведение, определенное в другом варианте использования.
+                                </p>
+                            </li>
+                            <li>
+                                Отношение расширения
+                                <p>
+                                    Отношение расширения (extend) определяет взаимосвязь одного варианта использования с некоторым другим вариантом использования, функциональность или поведение которого задействуется первым не всегда, а только при выполнении некоторых дополнительных условий.
+                                </p>
+                                <div style="display: flex; flex-direction: row; justify-content: space-around; align-items: center;">
+                                    <img src="../images/ElemExtend1.png"  align="right" vspace="5"
+                                    hspace="5" height="140px;">
+                                    <img src="../images/ElemExtend2.png" align="right" vspace="5"
+                                    hspace="5"  height="200px;">
+                                </div>
+                            </li>
+                            <li>
+                                Отношение обобщения<img src="../images/ElemGenRealship.png" align="right" vspace="5"
+                                hspace="5" height="160px;">
+                                <p>
+                                Отношение обобщения (generalization relationship) предназначено для спецификации того факта, что один элемент модели является специальным или частным случаем другого элемента модели.
+                                </p>
+                            </li>
+                        </ul>
+                        <p><span>ПРИМЕР</span>. Диаграмма вариантов использования для турагенства</i></p>
+                        <div style="text-align: center;">
+                            <img id="myImg5" src="../images/ExampleUC.png" align="center"
+                                alt="ПРИМЕР. Диаграмма вариантов использования для турагенства" width="600px">
+                        </div>
+                        <div class="line"></div>
+                    <p>Порядок построения диаграммы вариантов использования по предметной области:</p>
+                    <ol>
+                        <li>Определение актеров (actor) системы</li>
+                        <li>Определение вариантов использования (use-case)</li>
+                        <li>Определение виды взаимодействия (ассоциации, расширения, включения)</li>
+                        <li>Построение полной диаграммы.</li>
+                    </ol>
+                    </div>
+
+                    <div id="sequenceBlock" class="tabcontent">
+                        <p>Диаграммы последовательности следует применять тогда, когда требуется посмотреть на поведение
+                            нескольких объектов в рамках одного прецедента.
+                        </p>
+                        <p>
+                            На диаграмме показаны экземпляры объектов и сообщения, которыми обмениваются объекты в
+                            рамках одного прецедента (use case).
+                        </p>
+                        <p style="text-align: center;"><i>Элементы диаграмм последовательности:</i></p>
+                        <ul>
+                            <li>Объекты</li>
+                        </ul>
+                        <p>
+                            В диаграмме объектами выступают участники системы, такие как акторы (Actor), границы
+                            (Boundary), контроллеры (Control) и сущности (Entity). Они называются участниками
+                            (Participants) и отображаются в виде пиктограмм или прямоугольника с названием.
+                        </p>
+                        <ul class="ListDiagramsUC">
+                            <li>
+                                <span>Акторы (Actor)</span> представляют пользователей или другие системы,
+                                взаимодействующие с
+                                системой, которая описывается на диаграмме. Они могут вызывать действия, которые система
+                                выполняет в ответ на их запросы. Например, актор может запросить у системы информацию и
+                                получить ответ.
+                            </li>
+                            <li>
+                                <span>Границы (Boundary)</span> определяют внешние границы системы и представляют собой
+                                точки входа
+                                или выхода, через которые система взаимодействует с внешним миром. Например, граница
+                                может представлять интерфейс пользователя, через который пользователь взаимодействует с
+                                системой.
+                            </li>
+                            <li>
+                                <span>Контроллеры (Control)</span> обрабатывают запросы и управляют потоком данных в
+                                системе. Они
+                                представляют собой узлы, через которые проходят данные и управляющие выполнением
+                                операций в системе. Например, контроллер может обрабатывать запросы, которые поступают
+                                от акторов и возвращать результаты.
+                            </li>
+                            <li>
+                                <span>Сущности (Entity)</span> представляют данные и хранят состояние системы. Они могут
+                                быть
+                                представлены как базы данных или другие системы хранения данных. Например, сущность
+                                может обрабатывать запросы на чтение или запись данных.
+                            </li>
+                        </ul>
+                        <div style="text-align: center;">
+                            <img src="../images/ObjDgrSeq.png" id="myImg1"
+                                alt="Виды объектов диаграммы последовательности">
+                        </div>
+                        <p>
+                            Каждый объект на диаграмме представлен вертикальной линией жизни, отображающей период
+                            времени, когда объект существует и выполняет операции. Кроме того, объекты могут содержать
+                            дополнительную информацию, такую как поля или состояния объекта, которые передаются между
+                            объектами в сообщениях.
+                        </p>
+                        <ul>
+                            <li>Линии жизни</li>
+                        </ul>
+                        <p>
+                            Линия жизни (lifeline) – это вертикальная линия на диаграмме последовательности UML, которая
+                            представляет объект или участника взаимодействия и связывает его с сообщениями во времени.
+                            Линия жизни начинается с появления объекта на диаграмме и продолжается до его удаления или
+                            окончания взаимодействия.
+                        </p>
+                        <p>
+                            На линии указываются различные элементы, такие как активности, состояния и метки времени,
+                            помогающие уточнить временные параметры взаимодействия объектов.
+                            Линия жизни является основным элементом на диаграмме последовательности, который помогает
+                            визуализировать хронологию взаимодействия в системе.
+                        </p>
+                        <ul>
+                            <li>Сообщения</li>
+                        </ul>
+                        <ul class="ListDiagramsUC">
+                            <li>
+                                <span>Синхронное сообщение</span> — актор-отправитель передаёт ход управления
+                                актору-получателю,
+                                которому необходимо провести в прецеденте некоторое действие. Пока проводимое
+                                актором-получателем действие не будет завершено (соответственно, не будет получено
+                                ответное сообщение), актор-отправитель теряет возможность производить какие-либо
+                                действия. Графически изображается как стрелка с закрашенным треугольником, после которой
+                                идёт прямоугольник, отражающий деятельность объекта, в конце которого находится ответное
+                                сообщение.
+                            </li>
+                            <li>
+                                <span>Ответное cообщение</span> — данное сообщение является ответом на синхронное
+                                сообщение.
+                                Обычно, содержит какое-либо возвращаемое изначальному актору-отправителю значение, также
+                                возвращающее ему управление (возможность действовать).
+                            </li>
+                            <li>
+                                <span>Асинхронное сообщение</span> — актёр-отправитель передаёт ход управления
+                                актору-получателю,
+                                которому необходимо провести в прецеденте некоторое действие. Основное отличие от
+                                синхронного сообщения состоит в том, что актор-отправитель не теряет возможности
+                                совершать другие действия.
+                            </li>
+                        </ul>
+                        <ul>
+                            <li>Активации</li>
+                        </ul>
+                        <p>
+                            Активации на диаграмме используются для отображения времени выполнения операций и
+                            вызовов <img src="../images/ActivationSeq.png" id="myImg2" align="right" vspace="5" hspace="5"
+                                alt="Отображение элемента «Активация»">
+                            методов внутри системы. Они позволяют увидеть, какие объекты на диаграмме активны в тот
+                            момент, когда выполняется та или иная операция или вызывается метод.
+
+                        </p>
+                        <p>
+                            Каждый объект имеет свою линию жизни, отображающую его существование во времени.
+                            Активация представляет собой область, ограниченную временной продолжительностью, которую
+                            занимает выполнение операции или вызов метода. Таким образом, активация показывает,
+                            когда и как долго объект активен в процессе выполнения операции.
+                        </p>
+                        <p>
+                            Активации используются для моделирования последовательности взаимодействия внутри
+                            системы. Они позволяют лучше понять порядок выполнения операций и вызовов методов, а
+                            также определить возможные ошибки.
+                        </p>
+                        <p><span>ПРИМЕР</span>. Диаграмма последовательности для варианта использования <i>«Заказать
+                                товар со склада»</i>
+                        </p>
+
+                        <div style="text-align: center;">
+                            <img id="myImg3" src="../images/ExampleSeq.png"
+                                alt="ПРИМЕР. Диаграмма последовательности для варианта использования «заказать товар со склада»">
+                        </div>
+                    </div>
+
+                    <div id="myModalImg" class="modalImg">
+                        <span class="close">×</span>
+                        <img class="modal-content" id="img01">
+                        <div id="caption"></div>
+                    </div>
+
+                </div>
+                <div class="btnstransition">
+                    <button onclick="document.location='secondblocktwopage.html'">Назад</button>
+                    <button onclick="document.location='secondblocktest.html'">К тесту</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <script>
+        function openElement(evt, elemName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(elemName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+
+        var modal = document.getElementById('myModalImg');
+
+        var img1 = document.getElementById('myImg1');
+        var img2 = document.getElementById('myImg2');
+        var img3 = document.getElementById('myImg3');
+        var img4 = document.getElementById('myImg4');
+        var img5 = document.getElementById('myImg5');
+        var modalImg = document.getElementById("img01");
+        var captionText = document.getElementById("caption");
+        img1.onclick = function () {
+            modal.style.display = "block";
+            modalImg.src = this.src;
+            captionText.innerHTML = this.alt;
+        }
+        img2.onclick = function () {
+            modal.style.display = "block";
+            modalImg.src = this.src;
+            captionText.innerHTML = this.alt;
+        }
+        img3.onclick = function () {
+            modal.style.display = "block";
+            modalImg.src = this.src;
+            captionText.innerHTML = this.alt;
+        }
+        img4.onclick = function () {
+            modal.style.display = "block";
+            modalImg.src = this.src;
+            captionText.innerHTML = this.alt;
+        }
+        img5.onclick = function () {
+            modal.style.display = "block";
+            modalImg.src = this.src;
+            captionText.innerHTML = this.alt;
+        }
+
+        var span = document.getElementsByClassName("close")[0];
+
+        span.onclick = function () {
+            modal.style.display = "none";
+        }
+    </script>
+</body>
+
+</html>

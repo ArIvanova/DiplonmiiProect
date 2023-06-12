@@ -1,0 +1,430 @@
+<html>
+
+<head>
+  <meta charset="UTF-8"> <!-- Определяем кодировку символов документа -->
+  <link rel="icon" href="../images/favicon.ico">
+  <title>Тест по второму блоку</title> <!-- Задаем заголовок документа -->
+  <link rel="stylesheet" type="text/css" href="style.css"> <!-- Подключаем внешнюю таблицу стилей -->
+  <script>
+    function testCount() {
+      const
+        test = document.querySelector(".test"),
+        questionsCount = test.querySelectorAll("ul").length,
+        checked = test.querySelectorAll("input:checked"),
+        checkedCount = checked.length,
+        right = test.querySelectorAll("li.right input:checked"),
+        rightCount = right.length
+        ;
+      alert(`Вопросов в тесте: ${questionsCount}
+Верных ответов: ${rightCount}, процент выполнения: ${(rightCount / questionsCount * 100).toFixed(0)}%
+`)
+    }
+  </script>
+  <style>
+    body {
+      background-image: linear-gradient(45deg, #dce8dc, #c8f0d0);
+      font-family: "Figtree", sans-serif;
+    }
+
+    .background {
+      height: 100%;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .mainblock {
+      background-color: #edcec5;
+      width: 90%;
+      height: 90%;
+      border-radius: 15px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .activlink {
+      font-weight: bold;
+      color: white;
+      text-shadow: white 0 0 10px;
+    }
+
+    nav {
+      width: 100%;
+      height: 10%;
+      background-color: #295542;
+      border-radius: 15px 15px 0 0;
+      text-align: center;
+    }
+
+    nav ul {
+      padding: 0;
+      list-style: none;
+      position: relative;
+    }
+
+    nav ul li {
+      display: inline-block;
+
+    }
+
+    nav a {
+      padding: 0 20px;
+      display: block;
+      color: #FFF;
+      font-size: 20px;
+      text-decoration: none;
+      /*line-height: 10%;*/
+    }
+
+    nav a:hover {
+      background-color: #000000;
+      border-radius: 15px;
+      margin-top: 2px;
+      margin-bottom: 2px;
+      font-weight: 600;
+    }
+
+    nav ul ul {
+      display: none;
+      position: absolute;
+      top: 100%;
+      background-color: #295542;
+      border-radius: 15px;
+      text-align: left;
+
+    }
+
+    nav ul li:hover>ul {
+      display: inherit;
+    }
+
+    nav ul ul li {
+      float: none;
+      display: list-item;
+      position: relative;
+    }
+
+    .verh {
+      align-self: flex-start;
+    }
+
+    ul.breadcrumb {
+      padding: 10px 16px;
+      list-style: none;
+    }
+
+    ul.breadcrumb li {
+      display: inline;
+      font-size: 18px;
+    }
+
+    ul.breadcrumb li+li:before {
+      padding: 8px;
+      color: black;
+      content: "/\00a0";
+    }
+
+    ul.breadcrumb li a {
+      color: #295542;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    ul.breadcrumb li a:hover {
+      color: #214536;
+      text-decoration: underline;
+    }
+
+    .infoblocks {
+      height: 90%;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow-y: scroll;
+    }
+
+    div.infotext {
+      background-color: white;
+      border-radius: 15px;
+      width: 90%;
+      padding: 3%;
+      text-align: justify;
+    }
+
+    div.infotext p {
+      font-family: "Figtree", sans-serif;
+      font-size: 20px;
+    }
+
+    div.infotext ul {
+      font-family: "Figtree", sans-serif;
+      font-size: 20px;
+    }
+
+    div.infotext ol {
+      font-family: "Figtree", sans-serif;
+      font-size: 20px;
+    }
+
+    span {
+      font-weight: 600;
+    }
+
+    button {
+      background-color: #295542;
+      color: white;
+      font-size: 20px;
+      width: 140px;
+      height: 35px;
+      border-radius: 15px;
+      margin-top: 30px;
+      cursor: pointer;
+    }
+
+    .btnstransition {
+      margin-bottom: 20px;
+    }
+
+    article ol li ul {
+      list-style-type: none;
+    }
+
+    article ol li {
+      margin-top: 10px;
+    }
+
+    .borderquesrion {
+      border: 2px solid #295542;
+      border-radius: 15px;
+      padding-left: 5%;
+      padding-right: 5%;
+      padding-bottom: 10px;
+      margin-bottom: 5px;
+      ;
+    }
+
+    input[type=button] {
+      background-color: #295542;
+      color: white;
+      font-size: 20px;
+      width: 200px;
+      height: 40px;
+      border-radius: 15px;
+      cursor: pointer;
+      float: right
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="background">
+    <div class="mainBlock">
+
+      <nav class="menu">
+        <ul>
+          <li><a href="../start.html">Главная</a></li>
+          <li><a href="firstblockonepage.html">Введение в БД</a>
+            <ul>
+              <li><a href="firstblockonepage.html">Определение и назначение БД</a></li>
+              <li><a href="firstblocktwopage.html">ER (entity-relationship)-диаграммы</a></li>
+              <li><a href="firstblockthreepage.html">Нормализация баз данных</a></li>
+              <li><a href="firstblocktest.html">Итоговый тест</a></li>
+              <li><a href="firstblocktasks.html">Практические задания</a></li>
+              <li><a href="firstblocklinks.html">Полезные материалы</a></li>
+            </ul>
+          </li>
+          <li><a href="secondblockonepage.html" class="activlink">Диаграммы UML</a>
+            <ul>
+              <li><a href="secondblockonepage.html">Введение в язык UML</a></li>
+              <li><a href="secondblocktwopage.html">Основное о диаграммах UML</a></li>
+              <li><a href="secondblockthreepage.html">Построение диаграмм на ДЭ</a></li>
+              <li><a href="secondblocktest.html" class="activlink">Итоговый тест</a></li>
+              <li><a href="secondblocktasks.html">Практические задания</a></li>
+              <li><a href="secondblocklinks.html">Полезные материалы</a></li>
+            </ul>
+          <li><a href="#">СУБД</a></li>
+        </ul>
+      </nav>
+
+      <div class="infoblocks">
+        <div class="verh">
+          <ul class="breadcrumb">
+            <li><a href="secondblockonepage.html">Диаграммы UML</a></li>
+            <li>Итоговый тест</li>
+          </ul>
+        </div>
+        <div class="infotext">
+          <article class="test">
+            <ol>
+              <diV class="borderquesrion">
+                <li>Кто были три инженера-программиста, разработавшие UML?
+                  <ul>
+                    <li><label><input type="radio" name="q1">Марк Цукерберг, Билл Гейтс и Стив Джобс</label></li>
+                    <li class="right"><label><input type="radio" name="q1">Грэди Буч, Ивар Джейкобсон и Джеймс</label>
+                    </li>
+                    <li><label><input type="radio" name="q1">Илон Маск, Джефф Безос и Ларри Пейдж</label></li>
+                    <li><label><input type="radio" name="q1">Тим Бернерс-Ли, Линус Торвальдс и Ричард Столлман</label>
+                    </li>
+                  </ul>
+                </li>
+              </diV>
+
+              <diV class="borderquesrion">
+                <li>Какова цель UML?
+                  <ul>
+                    <li class="right"><label><input type="radio" name="q2">Для визуального документирования поведения и
+                        структуры системы или процесса</label></li>
+                    <li><label><input type="radio" name="q2">Разработать более хаотичный способ представления сложного
+                        программного обеспечения</label></li>
+                    <li><label><input type="radio" name="q2">Обеспечить методологию процесса разработки программного
+                        обеспечения</label>
+                    </li>
+                    <li><label><input type="radio" name="q2">Разделить этапы проектирования и строительства
+                        проекта</label></li>
+                  </ul>
+                </li>
+              </diV>
+
+              <diV class="borderquesrion">
+                <li>В каких отраслях используется UML?
+                  <ul>
+                    <li><label><input type="radio" name="q3">Только ИТ-индустрия</label></li>
+                    <li><label><input type="radio" name="q3">Только бизнес-индустрия</label></li>
+                    <li><label><input type="radio" name="q3">Только отрасль здравоохранения</label></li>
+                    <li class="right"><label><input type="radio" name="q3">Многие отрасли, включая ИТ, бизнес и
+                        другие</label></li>
+                  </ul>
+                </li>
+              </diV>
+
+              <diV class="borderquesrion">
+                <li>Стандартной практической нотацией для разработчиков, а также для руководителей проектов, владельцев
+                  бизнеса, технических предпринимателей и специалистов из разных отраслей является?
+                  <ul>
+                    <li><label><input type="radio" name="q4">HTML</label></li>
+                    <li><label><input type="radio" name="q4">Java</label></li>
+                    <li><label><input type="radio" name="q4">Python</label></li>
+                    <li class="right"><label><input type="radio" name="q4">UML</label></li>
+                  </ul>
+                </li>
+              </diV>
+
+              <diV class="borderquesrion">
+                <li>Для чего используется UML?
+                  <ul>
+                    <li><label><input type="radio" name="q5">Создавать и документировать программные системы</label>
+                    </li>
+                    <li><label><input type="radio" name="q5">Чтобы обеспечить хаотичное представление о сложном
+                        программном обеспечении</label></li>
+                    <li class="right"><label><input type="radio" name="q5">Визуализировать процесс разработки</label>
+                    </li>
+                    <li><label><input type="radio" name="q5">Отделить методологию от самого процесса</label></li>
+                  </ul>
+                </li>
+              </diV>
+
+              <diV class="borderquesrion">
+                <li>Основными типами диаграмм UML являются…
+                  <ul>
+                    <li><label><input type="radio" name="q6">структурные и поведенческие диаграммы</label></li>
+                    <li class="right"><label><input type="radio" name="q6">поведенческие и структурированные
+                        диаграммы</label></li>
+                    <li><label><input type="radio" name="q6">поведенные и структурированные</label></li>
+                    <li><label><input type="radio" name="q6">нет правильного ответа</label></li>
+                  </ul>
+                </li>
+              </diV>
+
+              <diV class="borderquesrion">
+                <li>К структурированным диаграммам не относится
+                  <ul>
+                    <li><label><input type="radio" name="q7">диаграмма пакетов</label></li>
+                    <li><label><input type="radio" name="q7">диаграмма профиля</label></li>
+                    <li><label><input type="radio" name="q7">диаграмма конечного автомата</label></li>
+                    <li class="right"><label><input type="radio" name="q7">все вышеперечисленные – структурированные
+                        диаграммы</label></li>
+                  </ul>
+                </li>
+              </diV>
+
+              <diV class="borderquesrion">
+                <li>О какой диаграмме идет речь – «Часто эта диаграмма используется как способ проверить диаграмму
+                  классов на точность. Другими словами, будет ли это работать на практике? Она показывает системные
+                  объекты и их взаимосвязи и предлагает лучшее представление о потенциальных недостатках проекта,
+                  которые необходимо исправить.»
+                  <ul>
+                    <li class="right"><label><input type="radio" name="q8">диаграмма объектов</label></li>
+                    <li><label><input type="radio" name="q8">диаграмма компонентов</label></li>
+                    <li><label><input type="radio" name="q8">диаграмма классов</label></li>
+                    <li><label><input type="radio" name="q8">диаграмма взаимодействия</label></li>
+                  </ul>
+                </li>
+              </diV>
+
+              <diV class="borderquesrion">
+                <li>Какая диаграмма представлена на рисунке?<br>
+                  <div style="text-align: center;">
+                    <img src="../images/dgrForTest.jpg" width="500px">
+                  </div>
+                  <ul>
+                    <li><label><input type="radio" name="q9">диаграмма объектов</label></li>
+                    <li class="right"><label><input type="radio" name="q9">диаграмма компонентов</label></li>
+                    <li><label><input type="radio" name="q9">диаграмма классов</label></li>
+                    <li><label><input type="radio" name="q9">диаграмма взаимодействия</label></li>
+                  </ul>
+                </li>
+              </diV>
+
+              <diV class="borderquesrion">
+                <li>Укажите полный перечень основных обозначения в UseCase – диаграмме
+                  <ul>
+                    <li><label><input type="radio" name="q10">Отношение ассоциации, отношение включения, отношение
+                        расширения, отношение обобщения, актеры, вариант использования.</label></li>
+                    <li><label><input type="radio" name="q10">Отношение расширения, отношение обобщения, актеры, вариант
+                        использования, граница системы, отношение ассоциации, отношение включения, отношение
+                        развертывания</label></li>
+                    <li class="right"><label><input type="radio" name="q10">Отношение расширения, отношение обобщения,
+                        актеры, вариант использования, граница системы, отношение ассоциации, отношение
+                        включения.</label></li>
+                    <li><label><input type="radio" name="q10">Отношение расширения, актеры, вариант использования,
+                        граница системы, отношение ассоциации, отношение включения, отношение развертывания.</label>
+                    </li>
+                  </ul>
+                </li>
+              </diV>
+
+              <diV class="borderquesrion">
+                <li>Каких объектов в диаграмме последовательности не существует?
+                  <ul>
+                    <li><label><input type="radio" name="q11">Акторы</label></li>
+                    <li><label><input type="radio" name="q11">Сущности</label></li>
+                    <li><label><input type="radio" name="q11">Контроллеры</label></li>
+                    <li class="right"><label><input type="radio" name="q11">Вариант использования</label></li>
+                  </ul>
+                </li>
+              </diV>
+
+            </ol>
+          </article>
+
+          <input type="button" value="Посчитать" onclick="testCount( )">
+
+        </div>
+        <div class="btnstransition">
+          <button onclick="document.location='secondblockthreepage.html'">К теории</button>
+          <button onclick="document.location='secondblocktasks.html'">К заданиям</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+</body>
+
+</html>

@@ -1,0 +1,1110 @@
+<html>
+
+<head>
+    <meta charset="UTF-8"> <!-- Определяем кодировку символов документа -->
+    <link rel="icon" href="../images/favicon.ico">
+    <title>Основное о диаграммах UML</title> <!-- Задаем заголовок документа -->
+    <link rel="stylesheet" type="text/css" href="style.css"> <!-- Подключаем внешнюю таблицу стилей -->
+    <style>
+        body {
+            background-image: linear-gradient(45deg, #dce8dc, #c8f0d0);
+            font-family: "Figtree", sans-serif;
+        }
+
+        .background {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .mainblock {
+            background-color: #edcec5;
+            width: 90%;
+            height: 90%;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .activlink {
+            font-weight: bold;
+            color: white;
+            text-shadow: white 0 0 10px;
+        }
+
+        nav {
+            width: 100%;
+            height: 10%;
+            background-color: #295542;
+            border-radius: 15px 15px 0 0;
+            text-align: center;
+        }
+
+        nav ul {
+            padding: 0;
+            list-style: none;
+            position: relative;
+        }
+
+        nav ul li {
+            display: inline-block;
+
+        }
+
+        nav a {
+            padding: 0 20px;
+            display: block;
+            color: #FFF;
+            font-size: 20px;
+            text-decoration: none;
+            /*line-height: 10%;*/
+        }
+
+        nav a:hover {
+            background-color: #000000;
+            border-radius: 15px;
+            margin-top: 2px;
+            margin-bottom: 2px;
+            font-weight: 600;
+        }
+
+        nav ul ul {
+            display: none;
+            position: absolute;
+            top: 100%;
+            background-color: #295542;
+            border-radius: 15px;
+            text-align: left;
+            z-index: 1;
+
+        }
+
+        nav ul li:hover>ul {
+            display: inherit;
+        }
+
+        nav ul ul li {
+            float: none;
+            display: list-item;
+            position: relative;
+        }
+
+        .verh {
+            align-self: flex-start;
+        }
+
+        ul.breadcrumb {
+            padding: 10px 16px;
+            list-style: none;
+        }
+
+        ul.breadcrumb li {
+            display: inline;
+            font-size: 18px;
+        }
+
+        ul.breadcrumb li+li:before {
+            padding: 8px;
+            color: black;
+            content: "/\00a0";
+        }
+
+        ul.breadcrumb li a {
+            color: #295542;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        ul.breadcrumb li a:hover {
+            color: #214536;
+            text-decoration: underline;
+        }
+
+        .infoblocks {
+            height: 90%;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-y: scroll;
+        }
+
+        div.infotext {
+            background-color: white;
+            border-radius: 15px;
+            width: 90%;
+            padding: 3%;
+            text-align: justify;
+        }
+
+        div.infotext p {
+            font-family: "Figtree", sans-serif;
+            font-size: 20px;
+        }
+
+        span {
+            font-weight: 600;
+        }
+
+        .btnstransition button {
+            background-color: #295542;
+            color: white;
+            font-size: 20px;
+            width: 100px;
+            height: 35px;
+            border-radius: 15px;
+            margin-top: 30px;
+            cursor: pointer;
+        }
+
+        .btnstransition {
+            margin-bottom: 20px;
+        }
+
+        .definition {
+            background-color: #dce8dc;
+            border-left: 6px solid #295542;
+            padding: 5px 20px;
+
+            margin-left: 5%;
+            margin-right: 5%;
+        }
+
+        .tab {
+            overflow: hidden;
+            border: 1px solid #ccc;
+            background-color: #dce8dc;
+            text-align: center;
+        }
+
+        /* Style the buttons inside the tab */
+        .tab button {
+            background-color: #dce8dc;
+            float: center;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 20px 12px;
+            transition: 0.3s;
+            font-size: 14px;
+        }
+
+        /* Change background color of buttons on hover */
+        .tab button:hover {
+            background-color: #ddd;
+        }
+
+        /* Create an active/current tablink class */
+        .tab button.active {
+            background-color: #ccc;
+        }
+
+        /* Style the tab content */
+        .tabcontent {
+            display: none;
+            padding: 6px 12px;
+            border: 1px solid #ccc;
+            border-top: none;
+            text-align: center;
+        }
+
+        .line {
+            border-bottom: 2px solid #295542;
+            margin-top: 30px;
+            margin-bottom: 30px;
+        }
+
+
+        .headingCenter {
+            font-style: italic;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            font-family: "Figtree", sans-serif;
+            font-size: 20px;
+            border-radius: 15px;
+        }
+
+        table div {
+            background-color: dce8dc;
+            border-radius: 15px;
+            padding: 10px 0;
+        }
+
+        table th {
+            width: 50%;
+        }
+
+        .tddesc {
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        .chemaDiagr {
+            width: 380;
+            position: relative;
+            margin: 0 auto;
+        }
+
+        .chemaDiagr li button {
+            height: 40px;
+            width: 280px !important;
+            background-color: #edcec5;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            font-family: "Figtree", sans-serif;
+            font-size: 16px;
+        }
+
+        .chemaDiagr button:hover {
+            background-color: #295542;
+            color: white;
+        }
+
+        .chemaDiagr li div {
+            height: 40px;
+            line-height: 40px;
+            background-color: #dce8dc;
+            width: 280px;
+            border: none;
+            border-radius: 15px;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .chemaDiagr li {
+            list-style-type: none;
+            padding: 20px 5px 0 5px;
+        }
+
+        .firstLevel li::before {
+            content: " ";
+            position: absolute;
+            margin-top: 20px;
+            border-bottom: 2px solid #000;
+        }
+
+        .secondLevel li::before {
+            content: " ";
+            position: absolute;
+            margin-top: 20px;
+            margin-left: -15px;
+            width: 15px;
+            border-bottom: 2px solid #000;
+        }
+
+        .threeLevel li::before {
+            content: " ";
+            position: absolute;
+            margin-top: 20px;
+            margin-left: -25px;
+            width: 25px;
+            border-bottom: 2px solid #000;
+        }
+
+        .fourLevel li::before {
+            content: " ";
+            position: absolute;
+            margin-top: 20px;
+            margin-left: -15px;
+            width: 15px;
+            border-bottom: 2px solid #000;
+        }
+
+        .lineVerticalOne::before {
+            content: " ";
+            position: absolute;
+            height: 521.7px;
+            width: 1px;
+            margin-left: -49px;
+            margin-top: 40px;
+            border-left: 2px solid #000;
+        }
+
+        .lineVerticalStr::before {
+            content: " ";
+            position: absolute;
+            height: 401.5px;
+            width: 1px;
+            margin-left: -46px;
+            margin-top: 40px;
+            border-left: 2px solid #000;
+        }
+
+        .lineVerticalPovd::before {
+            content: " ";
+            position: absolute;
+            height: 281.5px;
+            width: 1px;
+            margin-left: -63px;
+            margin-top: 40px;
+            border-left: 2px solid #000;
+        }
+
+        .lineVerticalVzaim::before {
+            content: " ";
+            position: absolute;
+            height: 221.7px;
+            width: 1px;
+            margin-left: -6px;
+            margin-top: 40px;
+            border-left: 2px solid #000;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            padding-top: 100px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0, 0, 0);
+            background-color: rgba(0, 0, 0, 0.4);
+
+        }
+
+        /* Modal Content */
+        .modal-content {
+            position: relative;
+            background-color: #fefefe;
+            margin: auto;
+            padding: 0;
+            border: 1px solid #888;
+            width: 80%;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            -webkit-animation-name: animatetop;
+            -webkit-animation-duration: 0.4s;
+            animation-name: animatetop;
+            animation-duration: 0.4s;
+            border-radius: 15px;
+        }
+
+        /* Add Animation */
+        @-webkit-keyframes animatetop {
+            from {
+                top: -300px;
+                opacity: 0
+            }
+
+            to {
+                top: 0;
+                opacity: 1
+            }
+        }
+
+        @keyframes animatetop {
+            from {
+                top: -300px;
+                opacity: 0
+            }
+
+            to {
+                top: 0;
+                opacity: 1
+            }
+        }
+
+        /* The Close Button */
+        .close {
+            color: white;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .modal-header {
+            padding: 2px 16px;
+            background-color: #295542;
+            color: white;
+            font-style: italic;
+            border: none;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+        }
+
+        .modal-body {
+            padding: 2px 16px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+        }
+
+        .modal-body div {
+            margin-right: 5%;
+        }
+
+        .modal-body p {
+            font-size: 18px !important;
+        }
+
+        .modal-body ul {
+            font-size: 18px;
+        }
+
+        .modal-footer {
+            padding: 5px 16px;
+            background-color: #295542;
+            height: 30px;
+            border-bottom-left-radius: 15px;
+            border-bottom-right-radius: 15px;
+
+
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="background">
+        <div class="mainBlock">
+
+            <nav class="menu">
+                <ul>
+                    <li><a href="../start.html">Главная</a></li>
+                    <li><a href="firstblockonepage.html">Введение в БД</a>
+                        <ul>
+                            <li><a href="firstblockonepage.html">Определение и назначение БД</a></li>
+                            <li><a href="firstblocktwopage.html">ER (entity-relationship)-диаграммы</a></li>
+                            <li><a href="firstblockthreepage.html">Нормализация баз данных</a></li>
+                            <li><a href="firstblocktest.html">Итоговый тест</a></li>
+                            <li><a href="firstblocktasks.html">Практические задания</a></li>
+                            <li><a href="firstblocklinks.html">Полезные материалы</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="secondblockonepage.html" class="activlink">Диаграммы UML</a>
+                        <ul>
+                            <li><a href="secondblockonepage.html">Введение в язык UML</a></li>
+                            <li><a href="secondblockrtwopage.html" class="activlink">Основное о диаграммах UML</a></li>
+                            <li><a href="secondblockthreepage.html">Построение диаграмм на ДЭ</a></li>
+                            <li><a href="secondblocktest.html">Итоговый тест</a></li>
+                            <li><a href="secondblocktasks.html">Практические задания</a></li>
+                            <li><a href="secondblocklinks.html">Полезные материалы</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#">СУБД</a></li>
+                </ul>
+            </nav>
+
+            <div class="infoblocks">
+                <div class="verh">
+                    <ul class="breadcrumb">
+                        <li><a href="secondblockonepage.html">Диаграммы UML</a></li>
+                        <li>Основное о диаграммах UML</li>
+                    </ul>
+                </div>
+                <div class="infotext">
+                    <p><span>UML-диаграмма</span> — это схема, нарисованная с применением символов UML. Она может
+                        содержать множество
+                        элементов и соединений между ними. Полное описание масштабного проекта может состоять из
+                        несколько UML-диаграмм, связанных или не связанных между собой.
+                    </p>
+                    <div class="definition">
+                        <p><span>UML-диаграмма</span>– визуальное описание процесса, классов, взаимодействия</p>
+                    </div>
+                    <p>Элементами диаграммы UML могут быть классы программного кода, страницы сайта, части механизма,
+                        зоны торгового зала — в зависимости от того, какой процесс или какую сущность описывает её
+                        создатель.
+                    </p>
+                    <p>В языке UML десятки разных элементов. Основные элементы языка и их визуальные обозначения:</p>
+
+                    <div class="tab">
+                        <button class="tablinks" onclick="openElement(event, 'Class')">Класс</button>
+                        <button class="tablinks" onclick="openElement(event, 'Interface')">Интерфейс</button>
+                        <button class="tablinks" onclick="openElement(event, 'UseCase')">Юзкейс</button>
+                        <button class="tablinks" onclick="openElement(event, 'Relationship')">Связь</button>
+                        <button class="tablinks" onclick="openElement(event, 'Component')">Компонент</button>
+                        <button class="tablinks" onclick="openElement(event, 'Node')">Узел</button>
+                        <button class="tablinks" onclick="openElement(event, 'Message')">Взаимодействия</button>
+                        <button class="tablinks" onclick="openElement(event, 'Dependency')">Зависимость</button>
+                        <button class="tablinks" onclick="openElement(event, 'State')">Состояние</button>
+                        <button class="tablinks" onclick="openElement(event, 'Package')">Пакет</button>
+                        <button class="tablinks" onclick="openElement(event, 'Note')">Заметка</button>
+                        <button class="tablinks" onclick="openElement(event, 'Aggregation')">Аггрегация</button>
+                        <button class="tablinks" onclick="openElement(event, 'Generalization')">Обобщение</button>
+                    </div>
+
+                    <div id="Class" class="tabcontent">
+                        <h3>Класс</h3>
+                        <img src="../images/UMLClass.png">
+                        <p>Набор объектов со схожими свойствами</p>
+
+                    </div>
+
+                    <div id="Interface" class="tabcontent">
+                        <h3>Интерфейс</h3>
+                        <img src="../images/UMLInterface.png">
+                        <p>Набор доступных операций для объекта</p>
+                    </div>
+
+                    <div id="UseCase" class="tabcontent">
+                        <h3>Юзкейс</h3>
+                        <img src="../images/UMLUsecase.png">
+                        <p>Набор действий, которая система может выполнить или не выпонлить</p>
+                    </div>
+
+                    <div id="Relationship" class="tabcontent">
+                        <h3>Связь</h3>
+                        <img src="../images/UMLRelationshop.png">
+                        <p>Показывает, что объекты связаны между собой</p>
+                    </div>
+
+                    <div id="Component" class="tabcontent">
+                        <h3>Компонент</h3>
+                        <img src="../images/UMLComponent.png">
+                        <p>Большая часть системы, например, файл или библиотека</p>
+                    </div>
+
+                    <div id="Node" class="tabcontent">
+                        <h3>Узел</h3>
+                        <img src="../images/UMLNode.png">
+                        <p>Еще более крупная часть системы. Как правило, содержит компоненты, например, сервер, на
+                            котором запущена программа</p>
+                    </div>
+
+                    <div id="Message" class="tabcontent">
+                        <h3>Взаимодействия</h3>
+                        <img src="../images/UMLMessage.png">
+                        <p>Обмен информацией между компонентами системы</p>
+                    </div>
+
+                    <div id="Dependency" class="tabcontent">
+                        <h3>Зависимость</h3>
+                        <img src="../images/UMLDependency.png">
+                        <p>При изменении одного элемента изменяется и другой, соединенный с ним стрелкой такого типа</p>
+                    </div>
+
+                    <div id="State" class="tabcontent">
+                        <h3>Состояние</h3>
+                        <img src="../images/UMLState.png">
+                        <p>Особая конфигурация системы, через которую она проходит. Например, фаза вычислений, во время
+                            которой программа не отвечает на другие запросы</p>
+                    </div>
+
+                    <div id="Package" class="tabcontent">
+                        <h3>Пакет</h3>
+                        <img src="../images/UMLPackage.png">
+                        <p>Объединение нескольких элементов диаграммы в группу по определенному критерию</p>
+                    </div>
+
+                    <div id="Note" class="tabcontent">
+                        <h3>Заметка</h3>
+                        <img src="../images/UMLNote.png">
+                        <p>Небольшой комментарий к отдельным элементам диаграммы</p>
+                    </div>
+
+                    <div id="Aggregation" class="tabcontent">
+                        <h3>Аггрегация</h3>
+                        <img src="../images/UMLAggregation.png">
+                        <p>Целевой элемент, часть исходного элемента</p>
+                    </div>
+
+                    <div id="Generalization" class="tabcontent">
+                        <h3>Обобщение</h3>
+                        <img src="../images/UMLGeneralization.png">
+                        <p>Исходный элемент. Чатсная разновидность другого, более общего элемента, как объект и класс в
+                            программировании</p>
+                    </div>
+                    <div class="line"></div>
+                    <p class="headingCenter">Типы диаграмм</p>
+                    <table>
+                        <tr>
+                            <th>
+                                <div>структурированные</div>
+                            </th>
+                            <th>
+                                <div>поведенческие</div>
+                            </th>
+                        </tr>
+                        <tr>
+                            <td class="tddesc">
+                                <p>описывают структуру сложных объектов и систем</p>
+                            </td>
+                            <td class="tddesc">
+                                <p>иллюстрируют взаимодействие с системой и процесс её работы</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <ul>
+                                    <li>Общая картина взаимоействия</li>
+                                    <li>Как устроено, кто с кем связан</li>
+                                </ul>
+                            </td>
+                            <td>
+                                <ul>
+                                    <li>Динамическое поведение, изменение состояния во времени</li>
+                                    <li>Как работает, последовательность процессов</li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </table>
+
+
+                    <div class="chemaDiagr">
+                        <ul class="firstLevel">
+                            <li>
+                                <div class="lineVerticalOne">Диаграммы UML</div>
+                                <ul class="secondLevel">
+                                    <li>
+                                        <div class="lineVerticalStr">Структурированные</div>
+                                        <ul class="threeLevel">
+                                            <li><button onclick="openModal(event, 'ClassModal')">Диаграмма
+                                                    классов</button></li>
+                                            <li><button onclick="openModal(event, 'ObjectModal')">Диаграмма
+                                                    объектов</button></li>
+                                            <li><button onclick="openModal(event, 'PackpageModal')">Диаграмма
+                                                    пакетов</button></li>
+                                            <li><button onclick="openModal(event, 'StrukturModal')">Составная
+                                                    структурная диаграмма</button></li>
+                                            <li><button onclick="openModal(event, 'ComponentModal')">Диаграмма
+                                                    компонентов</button></li>
+                                            <li><button onclick="openModal(event, 'RazvertModal')">Диаграмма
+                                                    развертывания</button></li>
+                                            <li><button onclick="openModal(event, 'ProfileModal')">Диаграмма
+                                                    профиля</button></li>
+                                        </ul>
+                                    </li>
+                                    <li class="secondLevel">
+                                        <div class="lineVerticalPovd">Поведенческие</div>
+                                        <ul class="threeLevel">
+                                            <li><button onclick="openModal(event, 'VariantModal')">Диаграмма вариантов
+                                                    использования</button></li>
+                                            <li>
+                                                <div>Диаграмма потоков данных</div>
+                                            </li>
+                                            <li><button onclick="openModal(event, 'ActivityModal')">Диаграмма
+                                                    деятельности</button></li>
+                                            <li><button onclick="openModal(event, 'EndModal')">Диаграмма конечного
+                                                    автомата</button></li>
+                                            <li>
+                                                <div class="lineVerticalVzaim">Диаграмма взаимодействия</div>
+                                                <ul class="fourLevel">
+                                                    <li><button onclick="openModal(event, 'SequenceModal')">Диаграмма
+                                                            последовательности</button></li>
+                                                    <li><button onclick="openModal(event, 'SvazModal')">Диаграмма
+                                                            связи</button></li>
+                                                    <li><button onclick="openModal(event, 'TimeModal')">Временная
+                                                            диаграмма</button></li>
+                                                    <li><button onclick="openModal(event, 'ObzorModal')">Обзорная
+                                                            диаграмма взаимодействия</button></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div id="ClassModal" class="Modal">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <span class="close" onclick="closeModal(event, 'ClassModal')">×</span>
+                                <h3>ДИАГРАММА КЛАССОВ</h3>
+                            </div>
+                            <div class="modal-body">
+                                <div>
+                                    <p>
+                                        Эта диаграмма, наиболее распространенная при разработке ПО, используется для
+                                        изображения логической и физической структуры системы и показывает ее классы.
+                                        Она похожа на блок-схему, потому что классы представлены в виде блоков. Эта
+                                        диаграмма предлагает визуальное представление о различных классах и о том, как
+                                        они взаимосвязаны. У каждого класса есть три секции: </p>
+                                    <ul>
+                                        <li>Верхняя секция: имя класса</li>
+                                        <li>Средняя секция: атрибуты класса </li>
+                                        <li>Нижняя секция: методы или операции класса</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <img src="../images/dgrClass.png" width="400px">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                            </div>
+                        </div>
+                    </div>
+                    <div id="ObjectModal" class="Modal">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <span class="close" onclick="closeModal(event, 'ObjectModal')">×</span>
+                                <h3>ДИАГРАММА ОБЪЕКТОВ</h3>
+                            </div>
+                            <div class="modal-body">
+                                <div>
+                                    <p>
+                                        Часто эта диаграмма используется как способ проверить диаграмму классов на
+                                        точность. Другими словами, будет ли это работать на практике? Она показывает
+                                        системные объекты и их взаимосвязи и предлагает лучшее представление о
+                                        потенциальных недостатках проекта, которые необходимо исправить. Показывает
+                                        состояние экземпляров классов с конкретными значениями полей в определенный
+                                        момент времени.</p>
+                                </div>
+                                <div>
+                                    <img src="../images/dgrObject.png" width="400px">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                            </div>
+                        </div>
+                    </div>
+                    <div id="PackpageModal" class="Modal">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <span class="close" onclick="closeModal(event, 'PackpageModal')">×</span>
+                                <h3>ДИАГРАММА ПАКЕТОВ</h3>
+                            </div>
+                            <div class="modal-body">
+                                <div>
+                                    <p>
+                                        Этот тип используется, чтобы изобразить зависимости между пакетами, которые
+                                        составляют модель. Основная цель — показать взаимосвязь между различными
+                                        крупными компонентами, которые образуют сложную систему, а также демонстрирует
+                                        вложенность и связи между пакетами.</p>
+                                </div>
+                                <div>
+                                    <img src="../images/dgrPackage.png" width="450px">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                            </div>
+                        </div>
+                    </div>
+                    <div id="StrukturModal" class="Modal">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <span class="close" onclick="closeModal(event, 'StrukturModal')">×</span>
+                                <h3>СОСТАВНАЯ СТРУКТУРНАЯ ДИАГРАММА</h3>
+                            </div>
+                            <div class="modal-body">
+                                <div>
+                                    <p>
+                                        Этот тип редко используется кем-либо за пределами разработки программного
+                                        обеспечения. Почему? Хотя она похожа на диаграмму классов, она требует более
+                                        глубокого погружения, описывая внутреннюю структуру нескольких классов и
+                                        показывая взаимодействие между ними. Если вы не разработчик, верхний уровень
+                                        дает достаточно информации. </p>
+                                </div>
+                                <div>
+                                    <img src="../images/dgrStruktur.jpg" width="450px">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                            </div>
+                        </div>
+                    </div>
+                    <div id="ComponentModal" class="Modal">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <span class="close" onclick="closeModal(event, 'ComponentModal')">×</span>
+                                <h3>ДИАГРАММА КОМПОНЕНТОВ</h3>
+                            </div>
+                            <div class="modal-body">
+                                <div>
+                                    <p>
+                                        Также известна как блок-схема компонентов, она показывает логические группы
+                                        элементов и их взаимосвязи. Другими словами, она дает упрощенное представление о
+                                        сложной системе, разбивая ее на более мелкие компоненты. Каждый из элементов
+                                        показан в прямоугольной рамке с названием, написанным внутри. Соединители
+                                        определяют отношения / зависимости между различными компонентами.</p>
+                                </div>
+                                <div>
+                                    <img src="../images/dgrComponent.jpg" width="450px">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                            </div>
+                        </div>
+                    </div>
+                    <div id="RazvertModal" class="Modal">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <span class="close" onclick="closeModal(event, 'RazvertModal')">×</span>
+                                <h3>ДИАГРАММА РАЗВЕРТЫВАНИЯ</h3>
+                            </div>
+                            <div class="modal-body">
+                                <div>
+                                    <p>
+                                        На этой диаграмме показаны аппаратные (узлы) и программные (артефакты)
+                                        компоненты и их взаимосвязи. Она предлагает наглядное представление о том, где
+                                        именно развернут каждый программный компонент. </p>
+                                </div>
+                                <div>
+                                    <img src="../images/dgrRazvert.jpg" width="580px">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                            </div>
+                        </div>
+                    </div>
+                    <div id="ProfileModal" class="Modal">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <span class="close" onclick="closeModal(event, 'ProfileModal')">×</span>
+                                <h3>ДИАГРАММА ПРОФИЛЯ</h3>
+                            </div>
+                            <div class="modal-body">
+                                <div>
+                                    <p>
+                                        Этот тип меньше похоже на диаграмму и больше — на язык. Диаграмма профиля
+                                        помогает создавать новые свойства и семантику для диаграмм UML путем определения
+                                        пользовательских стереотипов, теговых значений и ограничений. Эти профили
+                                        позволяют настраивать метамодель UML для различных платформ (например, Java
+                                        Platform, Enterprise Edition (Java EE) или Microsoft .NET Framework) и доменов
+                                        (например, моделирование бизнес-процессов, сервис-ориентированная архитектура,
+                                        медицинские приложения и т. д.).</p>
+                                </div>
+                                <div>
+                                    <img src="../images/dgrProfile.jpg" width="500px">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                            </div>
+                        </div>
+                    </div>
+                    <div id="VariantModal" class="Modal">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <span class="close" onclick="closeModal(event, 'VariantModal')">×</span>
+                                <h3>ДИАГРАММА ВАРИАНТОВ ИСПОЛЬЗОВАНИЯ</h3>
+                            </div>
+                            <div class="modal-body">
+                                <div>
+                                    <p>
+                                        В этом типе описывается, что делает система, но не то, как она это делает.
+                                        Вариант использования — это набор событий, которые происходят, когда “оператор”
+                                        использует систему для завершения процесса. Оператор определяется как кто-либо
+                                        или что-либо, взаимодействующее с системой (человек, организация или приложение)
+                                        из-за пределов системы. Таким образом, диаграмма вариантов использования
+                                        визуально описывает этот набор последовательностей и представляет функциональные
+                                        требования системы.</p>
+                                </div>
+                                <div>
+                                    <img src="../images/dgrVariant.png" width="530px">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                            </div>
+                        </div>
+                    </div>
+                    <div id="ActivityModal" class="Modal">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <span class="close" onclick="closeModal(event, 'ActivityModal')">×</span>
+                                <h3>ДИАГРАММА ДЕЯТЕЛЬНОСТИ</h3>
+                            </div>
+                            <div class="modal-body">
+                                <div>
+                                    <p>
+                                        Этот тип изображает пошаговый процесс с четким началом и концом. Это набор
+                                        операций, которые должны быть выполнены, чтобы достичь цели. Она показывает, как
+                                        каждое действие ведет к следующему, и как все они связаны. Помимо разработки
+                                        программного обеспечения, они могут использоваться практически в любой
+                                        бизнес-среде. Их также называют картированием или моделированием
+                                        бизнес-процессов.</p>
+                                </div>
+                                <div>
+                                    <img src="../images/dgrActivity.jpg" width="420px">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                            </div>
+                        </div>
+                    </div>
+                    <div id="EndModal" class="Modal">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <span class="close" onclick="closeModal(event, 'EndModal')">×</span>
+                                <h3>ДИАГРАММА КОНЕЧНОГО АВТОМАТА</h3>
+                            </div>
+                            <div class="modal-body">
+                                <div>
+                                    <p>
+                                        Эта диаграмма, также называемая диаграммой состояний, применяется, когда
+                                        поведение объектов является сложным, а детали — существенными. Она помогает
+                                        описать поведение одного объекта (или иногда оператора) и то, как оно изменяется
+                                        в зависимости от внутренних и внешних событий.</p>
+                                </div>
+                                <div>
+                                    <img src="../images/dgrEnd.jpg" width="550px">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                            </div>
+                        </div>
+                    </div>
+                    <div id="SequenceModal" class="Modal">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <span class="close" onclick="closeModal(event, 'SequenceModal')">×</span>
+                                <h3>ДИАГРАММА ПОСЛЕДОВАТЕЛЬНОСТИ</h3>
+                            </div>
+                            <div class="modal-body">
+                                <div>
+                                    <p>
+                                        Эта визуально привлекательная диаграмма, популярная не только в сообществе
+                                        разработчиков, хорошо показывает все типы бизнес-процессов. Она просто
+                                        раскрывает структуру системы, показывая последовательность сообщений и
+                                        взаимодействий между операторами и объектами в хронологическом порядке.
+                                        Диаграммы последовательности отображают простую итерацию и ветвление. Это имеет
+                                        преимущества для многозадачности. </p>
+                                </div>
+                                <div>
+                                    <img src="../images/dgrSequence.jpg" width="550px">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                            </div>
+                        </div>
+                    </div>
+                    <div id="SvazModal" class="Modal">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <span class="close" onclick="closeModal(event, 'SvazModal')">×</span>
+                                <h3>ДИАГРАММА СВЯЗИ</h3>
+                            </div>
+                            <div class="modal-body">
+                                <div>
+                                    <p>
+                                        Диаграмма связи или сотрудничества аналогична диаграмме последовательности. Тем
+                                        не менее, она подчеркивает связь между объектами, показывает организацию
+                                        объектов, участвующих во взаимодействии, и предлагает более сложные итерации и
+                                        ветвления. </p>
+                                </div>
+                                <div>
+                                    <img src="../images/dgrSvaz.jpg" width="500px">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                            </div>
+                        </div>
+                    </div>
+                    <div id="TimeModal" class="Modal">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <span class="close" onclick="closeModal(event, 'TimeModal')">×</span>
+                                <h3>ВРЕМЕННАЯ ДИАГРАММА</h3>
+                            </div>
+                            <div class="modal-body" >
+                                <div>
+                                    <p style="font-size: 16px !important;">
+                                        Когда время имеет критическое значение, используется этот тип диаграмм UML.
+                                        Она показывает, как объекты и операторы действуют на временной шкале. Основное
+                                        внимание здесь уделяется тому, сколько времени занимают события и какие
+                                        изменения происходят в зависимости от ограничений продолжительности. Основные
+                                        части временной диаграммы включают в себя:</p>
+                                    <ul style="font-size: 16px;">
+                                        <li>Линия жизни: индивидуальный участник</li>
+                                        <li>Хронология состояний: разные состояния, через которые проходит линия жизни
+                                        </li>
+                                        <li>Ограничение продолжительности: время, необходимое для выполнения ограничения
+                                        </li>
+                                        <li>Ограничение по времени: время, за которое участник должен выполнить что-то
+                                        </li>
+                                        <li>Возникновение разрушения: где заканчивается линия жизни объекта. Никакое
+                                            другое событие не произойдет после появления разрушения на линии жизни.</li>
+                                    </ul>
+                                </div>
+                                <div style="text-align: center;">
+                                    <img src="../images/dgrTime.jpg" width="480px">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                            </div>
+                        </div>
+                    </div>
+                    <div id="ObzorModal" class="Modal">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <span class="close" onclick="closeModal(event, 'ObzorModal')">×</span>
+                                <h3>ОБЗОРНАЯ ДИАГРАММА ВЗАИМОДЕЙСТВИЯ</h3>
+                            </div>
+                            <div class="modal-body">
+                                <div>
+                                    <p>
+                                        Эта зачастую сложная диаграмма похожа на диаграмму деятельности, так как обе
+                                        показывают пошаговую последовательность действий. Но обзорная диаграмма
+                                        взаимодействия — это диаграмма деятельности, составленная из разных диаграмм
+                                        взаимодействия. Они используют те же аннотации, что и диаграмма деятельности
+                                        (начальная, конечная, решение, слияние, разветвление и соединение узлов) с
+                                        добавлением таких элементов, как взаимодействие, использование взаимодействия,
+                                        ограничение по времени и ограничение продолжительности.</p>
+                                </div>
+                                <div>
+                                    <img src="../images/dgrObzor.jpg" width="500px">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="btnstransition">
+                    <button onclick="document.location='secondblockonepage.html'">Назад</button>
+                    <button onclick="document.location='secondblockthreepage.html'">Далее</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    </div>
+
+    <script>
+        function openElement(evt, elemName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(elemName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+        //функция для открытия модальной коробки
+        function openModal(evt, ModalName) {
+            var i, modal, span;
+            modal = document.getElementsByClassName("modal");
+            for (i = 0; i < modal.length; i++) {
+                modal[i].style.display = "none";
+            }
+            document.getElementById(ModalName).style.display = "block";
+        }
+        //функция для закрытия модальной коробки по нажатию на элемент .close
+        function closeModal(evt, ModalName) {
+            var span = document.getElementsByClassName("close");
+            document.getElementById(ModalName).style.display = "none";
+        }
+
+        /*window.onclick = function (event) {
+            var isModal = (' ' + event.target.className + ' ').indexOf(' modal ') > -1;
+            if (isModal) {
+                event.target.style.display = "none";
+            }
+        }*/
+
+    </script>
+</body>
+
+</html>

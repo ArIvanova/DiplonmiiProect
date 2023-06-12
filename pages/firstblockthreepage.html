@@ -1,0 +1,724 @@
+<html>
+
+<head>
+    <meta charset="UTF-8"> <!-- Определяем кодировку символов документа -->
+    <link rel="icon" href="../images/favicon.ico">
+    <title>Нормализация баз данных</title> <!-- Задаем заголовок документа -->
+    <link rel="stylesheet" type="text/css" href="style.css"> <!-- Подключаем внешнюю таблицу стилей -->
+    <script src="script.js">
+    </script>
+    <style>
+        body {
+            background-image: linear-gradient(45deg, #dce8dc, #c8f0d0);
+            font-family: "Figtree", sans-serif;
+        }
+
+        .background {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .mainblock {
+            background-color: #edcec5;
+            width: 90%;
+            height: 90%;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .activlink {
+            font-weight: bold;
+            color: white;
+            text-shadow: white 0 0 10px;
+        }
+
+        nav {
+            width: 100%;
+            height: 10%;
+            background-color: #295542;
+            border-radius: 15px 15px 0 0;
+            text-align: center;
+        }
+
+        nav ul {
+            padding: 0;
+            list-style: none;
+            position: relative;
+        }
+
+        nav ul li {
+            display: inline-block;
+
+        }
+
+        nav a {
+            padding: 0 20px;
+            display: block;
+            color: #FFF;
+            font-size: 20px;
+            text-decoration: none;
+            /*line-height: 10%;*/
+        }
+
+        nav a:hover {
+            background-color: #000000;
+            border-radius: 15px;
+            margin-top: 2px;
+            margin-bottom: 2px;
+            font-weight: 600;
+        }
+
+        nav ul ul {
+            display: none;
+            position: absolute;
+            top: 100%;
+            background-color: #295542;
+            border-radius: 15px;
+            text-align: left;
+
+        }
+
+        nav ul li:hover>ul {
+            display: inherit;
+        }
+
+        nav ul ul li {
+            float: none;
+            display: list-item;
+            position: relative;
+        }
+        /*позиционирование блока с хлебными крошками*/
+        .verh {
+            align-self: flex-start;
+        }
+        /*общий стиль для элемент*/
+        ul.breadcrumb {
+            padding: 10px 16px;
+            list-style: none;
+        }
+        /*стиль для пунктов, выравнивие в строку*/
+        ul.breadcrumb li {
+            display: inline;
+            font-size: 18px;
+        }
+        
+        ul.breadcrumb li+li:before {
+            padding: 8px;
+            color: black;
+            content: "/\00a0";
+        }
+        /*стиль к ссылкам в хлебных крошках*/
+        ul.breadcrumb li a {
+            color: #295542;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        /*стиль к ссылкам при наведении*/
+        ul.breadcrumb li a:hover {
+            color: #214536;
+            text-decoration: underline;
+        }
+
+        .infoblocks {
+            height: 90%;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-y: scroll;
+        }
+
+        .info7NF {
+            width: 70%;
+            border: 2px solid #295542;
+            border-radius: 15px;
+            margin-left: 10%;
+            margin-right: 10%;
+            padding-left: 5%;
+            padding-right: 5%;
+        }
+
+        div.info7NF ul {
+            font-style: italic;
+        }
+
+        div.infotext {
+            background-color: white;
+            border-radius: 15px;
+            width: 90%;
+            padding: 3%;
+            text-align: justify;
+        }
+
+        div.infotext p {
+            font-family: "Figtree", sans-serif;
+            font-size: 20px;
+        }
+
+        div.infotext ul {
+            font-family: "Figtree", sans-serif;
+            font-size: 20px;
+        }
+
+        div.infotext ol {
+            font-family: "Figtree", sans-serif;
+            font-size: 20px;
+        }
+
+        span {
+            font-weight: 600;
+        }
+
+        .header3NF {
+            font-weight: 600;
+            text-align: center;
+            background-color: #295542;
+            color: white;
+            border-radius: 15px;
+
+        }
+
+        table {
+            width: 100%;
+            font-family: "Figtree", sans-serif;
+            font-size: 20px;
+            border-radius: 15px;
+        }
+
+        .tblattachment {
+            border: 1px solid #295542;
+            width: 100%;
+            font-family: "Figtree", sans-serif;
+            font-size: 20px;
+            border-radius: 0px;
+        }
+
+        th {
+            border: 1px solid #295542;
+            width: 30%;
+            border-radius: 15px;
+            color: white;
+            background-color: #295542;
+        }
+
+        table.tblattachment th {
+            border: 1px solid #295542;
+            color: black;
+            font-family: "Figtree", sans-serif;
+            font-size: 20px;
+            border-radius: 0;
+            background-color: white;
+        }
+
+        td {
+            border: 1px solid #295542;
+            text-align: justify;
+            padding-left: 2%;
+            padding-right: 2%;
+            padding-top: 0.5%;
+            padding-bottom: 0.5%;
+            border-radius: 15px;
+        }
+
+        table.tblattachment td {
+            border: 1px solid #295542;
+            color: black;
+            font-family: "Figtree", sans-serif;
+            font-size: 20px;
+            border-radius: 0;
+            background-color: white;
+        }
+
+        .nestedcell {
+            border: none;
+        }
+
+        button {
+            background-color: #295542;
+            color: white;
+            font-size: 20px;
+            width: 100px;
+            height: 35px;
+            border-radius: 15px;
+            margin-top: 30px;
+            cursor: pointer;
+        }
+
+        .line {
+            border-bottom: 2px solid #295542;
+        }
+
+        .btnstransition {
+            margin-bottom: 20px;
+        }
+
+        .notborder {
+            background-color: white;
+            border: none;
+            color: #000000;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="background">
+        <div class="mainBlock">
+
+            <nav class="menu">
+                <ul>
+                    <li><a href="../start.html">Главная</a></li>
+                    <li><a href="firstblockonepage.html" class="activlink">Введение в БД</a>
+                        <ul>
+                            <li><a href="firstblockonepage.html">Определение и назначение БД</a></li>
+                            <li><a href="firstblocktwopage.html">ER (entity-relationship)-диаграммы</a></li>
+                            <li><a href="firstblockthreepage.html" class="activlink">Нормализация баз данных</a></li>
+                            <li><a href="firstblocktest.html">Итоговый тест</a></li>
+                            <li><a href="firstblocktasks.html">Практические задания</a></li>
+                            <li><a href="firstblocklinks.html">Полезные материалы</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="secondblockonepage.html">Диаграммы UML</a>
+                        <ul>
+                            <li><a href="secondblockonepage.html">Введение в язык UML</a></li>
+                            <li><a href="secondblocktwopage.html">Основное о диаграммах UML</a></li>
+                            <li><a href="secondblockthreepage.html">Построение диаграмм на ДЭ</a></li>
+                            <li><a href="secondblocktest.html">Итоговый тест</a></li>
+                            <li><a href="secondblocktasks.html">Практические задания</a></li>
+                            <li><a href="secondblocklinks.html">Полезные материалы</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#">СУБД</a></li>
+                </ul>
+            </nav>
+
+            <div class="infoblocks">
+                <div class="verh">
+                    <ul class="breadcrumb">
+                        <li><a href="firstblockonepage.html">Введение в БД</a></li>
+                        <li>Нормализация баз данных</li>
+                    </ul>
+                </div>
+                <div class="infotext">
+                    <p><span>Нормализация</span> — это процесс организации данных в базе данных, включающий создание
+                        таблиц и установление отношений между ними в соответствии с правилами, которые обеспечивают
+                        защиту данных и делают базу данных более гибкой, устраняя избыточность и несогласованные
+                        зависимости.</p>
+                    <p>Что даёт нормализация данных и как она упрощает работу с базами:</p>
+                    <ol>
+                        <li>Уменьшает объём базы данных и экономит место.</li>
+                        <p>За счёт отдельных таблиц для категорий и повторяющихся элементов можно уменьшить размер
+                            записей в базе данных, а значит, и её вес.</p>
+                        <li>Упрощает поиск и делает работу с базой удобнее.</li>
+                        <p>Нормализованную базу данных, которая состоит из связанных таблиц, можно оптимизировать для
+                            задач без дополнительных действий. Например, для поиска по заданной категории не придётся
+                            искать и перебирать уникальные элементы в базе. Для этого можно обратиться к отдельной
+                            таблице с категориями и быстрее найти нужные данные.</p>
+                        <li>Уменьшает вероятность ошибок и аномалий.</li>
+                        <p>Нормальные формы данных в таблицах взаимосвязаны. Например, если нужно изменить или удалить
+                            данные в одной таблице, то остальные связанные с ней данные автоматически обновятся. Не
+                            придётся перебирать все записи в поисках полей, которые нужно изменить или удалить, а
+                            значит, не будет ошибок, когда в базу внесут изменения.</p>
+                    </ol>
+                    <div class="info7NF">
+                        <p>По правилам нормализации есть семь нормальных форм баз данных:</p>
+                        <ul>
+                            <li>Первая нормальная форма (1НФ)</li>
+                            <li>Вторая нормальная форма (2НФ)</li>
+                            <li>Третья нормальная форма (3НФ)</li>
+                            <li>Нормальная форма Бойса-Кодда</li>
+                            <li>Четвертая нормальная форма (4НФ)</li>
+                            <li>Пятая нормальная форма (5НФ)</li>
+                            <li>Шестая нормальная форма (6НФ)</li>
+                        </ul>
+                        <p>В некоторых случаях попытка нормализовать данные до «идеального» состояния может привести к
+                            созданию множества таблиц, ключей и связей. Это усложнит работу с базой и снизит
+                            производительность СУБД. Поэтому обычно данные нормализуют до третьей нормальной формы.</p>
+                    </div>
+                    <p class="headerNF">Первая нормальная форма</p>
+                    <p>Чтобы таблица находилась в первой нормальной форме, она должна соответствовать следующим
+                        правилам:</p>
+                    <ul>
+                        <li><span>Атомарность</span> значений атрибутов/столбцов.</li>
+                        <li>Значения, хранимые в одном столбце, должны принадлежать <span>одному домену</span> (типу
+                            данных).</li>
+                        <li><span>Не должно быть <span>повторений строк</span> в таблице</li>
+                    </ul>
+                    <table>
+                        <tr>
+                            <th>Нарушение 1НФ</th>
+                            <th>1НФ</th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <table class="tblattachment">
+                                    <tr>
+                                        <th>Фирма</th>
+                                        <th>Модели</th>
+                                    </tr>
+                                    <tr>
+                                        <td>BMW</td>
+                                        <td>M5, X5M, M1</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Nissan</td>
+                                        <td>GT-R</td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td>
+                                <table class="tblattachment">
+                                    <tr>
+                                        <th>Фирма</th>
+                                        <th>Модели</th>
+                                    </tr>
+                                    <tr>
+                                        <td>BMW</td>
+                                        <td>M5</td>
+                                    </tr>
+                                    <tr>
+                                        <td>BMW</td>
+                                        <td>X5M</td>
+                                    </tr>
+                                    <tr>
+                                        <td>BMW</td>
+                                        <td>M1</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Nissan</td>
+                                        <td>GT-R</td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <p class="headerNF">Вторая нормальная форма</p>
+                    <p>Чтобы таблица находилась во второй нормальной форме, она должна соответствовать следующим
+                        правилам:</p>
+                    <ul>
+                        <li>находиться в 1НФ,</li>
+                        <li>не иметь частичных зависимостей (<span>все атрибуты зависят от полного первичного
+                                ключа</span>).</li>
+                    </ul>
+                    <table>
+                        <tr>
+                            <th>Нарушение 2НФ</th>
+                            <th>2НФ</th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <table class="tblattachment">
+                                    <tr>
+                                        <th>Модель</th>
+                                        <th>Фирма</th>
+                                        <th>Цена</th>
+                                        <th>Скидка</th>
+                                    </tr>
+                                    <tr>
+                                        <td class="nestedcell">M5</td>
+                                        <td>BMW</td>
+                                        <td>5500000</td>
+                                        <td>5%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>X5M</td>
+                                        <td>BMW</td>
+                                        <td>6000000</td>
+                                        <td>5%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>M1</td>
+                                        <td>BMW</td>
+                                        <td>2500000</td>
+                                        <td>5%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>GT-R</td>
+                                        <td>Nissan</td>
+                                        <td>5000000</td>
+                                        <td>10%</td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td>
+                                <table class="tblrazdelenie">
+                                    <tr>
+                                        <td class="nestedcell">
+                                            <table class="tblattachment">
+                                                <tr>
+                                                    <th>Модель</th>
+                                                    <th>Фирма</th>
+                                                    <th>Цена</th>
+                                                </tr>
+                                                <tr>
+                                                    <td>M5</td>
+                                                    <td>BMW</td>
+                                                    <td>5500000</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>X5M</td>
+                                                    <td>BMW</td>
+                                                    <td>6000000</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>M1</td>
+                                                    <td>BMW</td>
+                                                    <td>2500000</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>GT-R</td>
+                                                    <td>Nissan</td>
+                                                    <td>5000000</td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="nestedcell">
+                                            <table class="tblattachment">
+                                                <tr>
+                                                    <th>Фирма</th>
+                                                    <th>Скидка</th>
+                                                </tr>
+                                                <tr>
+                                                    <td>BMW</td>
+                                                    <td>5%</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Nissan</td>
+                                                    <td>10%</td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <p class="headerNF">Третья нормальная форма</p>
+                    <p>Таблица находится в 3НФ, когда</p>
+                    <ul>
+                        <li>она находится в 2НФ,</li>
+                        <li>отсутствуют транзитивные зависимости (ситуации, при которых в некоторой тройке атрибутов
+                            первый зависит от второго, второй от третьего, а третий от первого).</li>
+                    </ul>
+                    <p class="header3NF">Нарушение 3НФ</p>
+                    <table>
+                        <tr>
+                            <th class="notborder">студент</th>
+                            <th class="notborder">предмет</th>
+                        </tr>
+                        <tr>
+                            <td class="notborder">
+                                <table class="tblattachment">
+                                    <tr>
+                                        <th style="width: 10%;">ИД</th>
+                                        <th>Имя</th>
+                                        <th>Направление</th>
+                                        <th>Адрес</th>
+                                    </tr>
+                                    <tr>
+                                        <td>10</td>
+                                        <td>Akon</td>
+                                        <td>CSE</td>
+                                        <td>Kerala</td>
+                                    </tr>
+                                    <tr>
+                                        <td>10</td>
+                                        <td>Akon</td>
+                                        <td>IT</td>
+                                        <td>Gujarat</td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td class="notborder">
+                                <table class="tblattachment">
+                                    <tr>
+                                        <th>ИД</th>
+                                        <th>Название</th>
+                                        <th>Учитель</th>
+                                    </tr>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>Java</td>
+                                        <td>Java Teacher</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>C++</td>
+                                        <td>C++ Teacher</td>
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        <td>Php</td>
+                                        <td>Php Teacher</td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                    <table>
+                        <tr>
+                            <th class="notborder">оценка</th>
+                        </tr>
+                        <tr>
+                            <td class="notborder">
+                                <table class="tblattachment">
+                                    <tr>
+                                        <th style="width: 10%;">ИД</th>
+                                        <th style="width: 15%;">ИД_студента</th>
+                                        <th style="width: 15%;">ИД_предмета</th>
+                                        <th style="width: 20%;">Оценка</th>
+                                        <th>Экзамен</th>
+                                        <th>Макс.балл</th>
+                                    </tr>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>10</td>
+                                        <td>1</td>
+                                        <td>70</td>
+                                        <td>Workshop</td>
+                                        <td>200</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>10</td>
+                                        <td>2</td>
+                                        <td>75</td>
+                                        <td>Mains</td>
+                                        <td>75</td>
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        <td>11</td>
+                                        <td>1</td>
+                                        <td>80</td>
+                                        <td>Practicals</td>
+                                        <td>120</td>
+                                    </tr>
+                                    <tr>
+                                        <td>4</td>
+                                        <td>11</td>
+                                        <td>2</td>
+                                        <td>100</td>
+                                        <td>Practicals</td>
+                                        <td>120</td>
+                                    </tr>
+                                    <tr>
+                                        <td>5</td>
+                                        <td>10</td>
+                                        <td>3</td>
+                                        <td>185</td>
+                                        <td>Workshop</td>
+                                        <td>200</td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                    <p class="header3NF"> 3НФ</p>
+                    <table>
+                        <tr>
+                            <th class="notborder">экзамен</th>
+                        </tr>
+                        <tr>
+                            <td class="notborder">
+                                <table class="tblattachment">
+                                    <tr>
+                                        <th>ИД</th>
+                                        <th>Название</th>
+                                        <th>Макс.балл</th>
+                                    </tr>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>Workshop</td>
+                                        <td>200</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>Mains</td>
+                                        <td>70</td>
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        <td>Practicals</td>
+                                        <td>30</td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                    <table>
+                        <tr>
+                            <th class="notborder">оценка</th>
+                        </tr>
+                        <tr>
+                            <td class="notborder">
+                                <table class="tblattachment">
+                                    <tr>
+                                        <th style="width: 20%;">ИД</th>
+                                        <th style="width: 20%;">ИД_студента</th>
+                                        <th style="width: 20%;">ИД_предмета</th>
+                                        <th style="width: 20%;">Оценка</th>
+                                        <th style="width: 20%;">ИД_экзамена</th>
+                                    </tr>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>10</td>
+                                        <td>1</td>
+                                        <td>70</td>
+                                        <td>1</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>10</td>
+                                        <td>2</td>
+                                        <td>75</td>
+                                        <td>2</td>
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        <td>11</td>
+                                        <td>1</td>
+                                        <td>80</td>
+                                        <td>3</td>
+                                    </tr>
+                                    <tr>
+                                        <td>4</td>
+                                        <td>11</td>
+                                        <td>2</td>
+                                        <td>100</td>
+                                        <td>3</td>
+                                    </tr>
+                                    <tr>
+                                        <td>5</td>
+                                        <td>10</td>
+                                        <td>3</td>
+                                        <td>185</td>
+                                        <td>1</td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="btnstransition">
+                    <button onclick="document.location='firstblocktwopage.html'">Назад</button>
+                    <button onclick="document.location='firstblocktest.html'">К тесту</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+</html>
