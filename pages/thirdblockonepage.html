@@ -1,0 +1,566 @@
+<html>
+
+<head>
+    <meta charset="UTF-8"> <!-- Определяем кодировку символов документа -->
+    <link rel="icon" href="../images/favicon.ico">
+    <title>Определение СУБД</title> <!-- Задаем заголовок документа -->
+    <link rel="stylesheet" type="text/css" href="style.css"> <!-- Подключаем внешнюю таблицу стилей -->
+    <script src="script.js">
+    </script>
+    <style>
+        body {
+            background-image: linear-gradient(45deg, #dce8dc, #c8f0d0);
+            font-family: "Figtree", sans-serif;
+        }
+
+        .background {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .mainblock {
+            background-color: #edcec5;
+            width: 90%;
+            max-width: 1708px;
+            height: 90%;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .activlink {
+            font-weight: bold;
+            color: white;
+            text-shadow: white 0 0 10px;
+        }
+
+        nav {
+            width: 100%;
+            height: 10%;
+            background-color: #295542;
+            border-radius: 15px 15px 0 0;
+            text-align: center;
+        }
+
+        nav ul {
+            padding: 0;
+            list-style: none;
+            position: relative;
+        }
+
+        nav ul li {
+            display: inline-block;
+
+        }
+
+        nav a {
+            padding: 0 20px;
+            display: block;
+            color: #FFF;
+            font-size: 20px;
+            text-decoration: none;
+            /*line-height: 10%;*/
+        }
+
+        nav a:hover {
+            background-color: #000000;
+            border-radius: 15px;
+            margin-top: 2px;
+            margin-bottom: 2px;
+            font-weight: 600;
+        }
+
+        nav ul ul {
+            display: none;
+            position: absolute;
+            top: 100%;
+            background-color: #295542;
+            border-radius: 15px;
+            text-align: left;
+
+        }
+
+        nav ul li:hover>ul {
+            display: inherit;
+        }
+
+        nav ul ul li {
+            float: none;
+            display: list-item;
+            position: relative;
+        }
+
+        .verh {
+            align-self: flex-start;
+        }
+
+        ul.breadcrumb {
+            padding: 10px 16px;
+            list-style: none;
+        }
+
+        ul.breadcrumb li {
+            display: inline;
+            font-size: 18px;
+        }
+
+        ul.breadcrumb li+li:before {
+            padding: 8px;
+            color: black;
+            content: "/\00a0";
+        }
+
+        ul.breadcrumb li a {
+            color: #295542;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        ul.breadcrumb li a:hover {
+            color: #214536;
+            text-decoration: underline;
+        }
+
+        .infoblocks {
+            height: 90%;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-y: scroll;
+        }
+
+        .btnstransition {
+            margin-bottom: 20px;
+        }
+
+
+        div.infotext {
+            background-color: white;
+            border-radius: 15px;
+            width: 90%;
+            padding: 3%;
+            text-align: justify;
+        }
+
+        div.infotext p {
+            font-family: "Figtree", sans-serif;
+            font-size: 20px;
+        }
+
+        span {
+            font-weight: 600;
+        }
+
+        .headingCenter {
+            font-style: italic;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        button {
+            background-color: #295542;
+            color: white;
+            font-size: 20px;
+            width: 100px;
+            height: 35px;
+            border-radius: 15px;
+            margin-top: 30px;
+            cursor: pointer;
+        }
+
+        div.infotext ul {
+            font-family: "Figtree", sans-serif;
+            font-size: 20px;
+        }
+
+        #myImg1,
+        #myImg2,
+        #myImg3,
+        #myImg4,
+        #myImg5,
+        #myImg6,
+        #myImg7,
+        #myImg8,
+        #myImg9,
+        #myImg10,
+        #myImg11,
+        #myImg12,
+        #myImg13 {
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        #myImg1,
+        #myImg2,
+        #myImg3,
+        #myImg4,
+        #myImg6,
+        #myImg7,
+        #myImg8,
+        #myImg9,
+        #myImg10,
+        #myImg11,
+        #myImg12,
+        #myImg13,
+        #myImg5:hover {
+            opacity: 0.7;
+        }
+
+        .modalImg {
+            display: none;
+            position: fixed;
+            padding-top: 100px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0, 0, 0);
+            background-color: rgba(0, 0, 0, 0.9);
+        }
+
+        .modal-content {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 700px;
+        }
+
+        #caption {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 700px;
+            text-align: center;
+            color: #ccc;
+            padding: 10px 0;
+            height: 150px;
+        }
+        .modal-content,
+        #caption {
+            -webkit-animation-name: zoom;
+            -webkit-animation-duration: 0.6s;
+            animation-name: zoom;
+            animation-duration: 0.6s;
+        }
+
+        @-webkit-keyframes zoom {
+            from {
+                -webkit-transform: scale(0)
+            }
+
+            to {
+                -webkit-transform: scale(1)
+            }
+        }
+
+        @keyframes zoom {
+            from {
+                transform: scale(0)
+            }
+
+            to {
+                transform: scale(1)
+            }
+        }
+
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="background">
+        <div class="mainBlock">
+
+            <nav class="menu">
+                <ul>
+                    <li><a href="../start.html">Главная</a></li>
+                    <li><a href="firstblockonepage.html">Введение в БД</a>
+                        <ul>
+                            <li><a href="firstblockonepage.html">Определение и назначение БД</a></li>
+                            <li><a href="firstblocktwopage.html">ER (entity-relationship)-диаграммы</a></li>
+                            <li><a href="firstblockthreepage.html">Нормализация баз данных</a></li>
+                            <li><a href="firstblocktest.html">Итоговый тест</a></li>
+                            <li><a href="firstblocktasks.html">Практические задания</a></li>
+                            <li><a href="firstblocklinks.html">Полезные материалы</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="secondblockonepage.html">Диаграммы UML</a>
+                        <ul>
+                            <li><a href="secondblockonepage.html">Введение в язык UML</a></li>
+                            <li><a href="secondblocktwopage.html">Основное о диаграммах UML</a></li>
+                            <li><a href="secondblockthreepage.html">Построение диаграмм на ДЭ</a></li>
+                            <li><a href="secondblocktest.html">Итоговый тест</a></li>
+                            <li><a href="secondblocktasks.html">Практические задания</a></li>
+                            <li><a href="secondblocklinks.html">Полезные материалы</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="thirdblockoonepage" class="activlink">СУБД</a>
+                        <ul>
+                            <li><a href="thirdblockonepage.html" class="activlink">Определение СУБД</a></li>
+                            <li><a href="thirdblocktwopage.html">Создание БД</a></li>
+                            <li><a href="thirdblockthreepage.html">Написание запросов</a></li>
+                            <li><a href="thirdblocktest.html">Итоговый тест</a></li>
+                            <li><a href="thirdblocktasks.html">Практические задания</a></li>
+                            <li><a href="thirdblocklinks.html">Полезные материалы</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="infoblocks">
+                <div class="verh">
+                    <ul class="breadcrumb">
+                        <li><a href="firstblockonepage.html">СУБД</a></li>
+                        <li>Определение СУБД</li>
+                    </ul>
+                </div>
+                <div class="infotext">
+                    <p><span>Система управления базами данных (СУБД)</span> — это набор инструментов, которые позволяют
+                        удобно управлять базами данных: удалять, добавлять, фильтровать и находить элементы, менять их
+                        структуру и создавать резервные копии.</p>
+                    <p>СУБД можно представить, как прослойку между базой данных и пользовательскими запросами к ней.</p>
+                    <div style="text-align: center;">
+                        <img id="myImg1" src="../images/imgPostpros.jpg" width="700px;"
+                            alt="Связь между базой данных и пользователем">
+                    </div>
+                    <p class="headingCenter">Для чего нужны СУБД</p>
+                    <p>СУБД нужны для всех манипуляций с базами данных, а именно чтобы:</p>
+                    <ul>
+                        <li>создавать базы данных и администрировать их: удалять, изменять и объединять;</li>
+                        <li>держать данные в структурированном виде и необходимом формате;</li>
+                        <li>защищать данные от нежелательных изменений и попыток взлома;</li>
+                        <li>загружать и сортировать данные с помощью фильтров;</li>
+                        <li>делать резервные копии, восстанавливать базы данных после сбоёв и поддерживать общую
+                            целостность.</li>
+                    </ul>
+                    <p>
+                        С помощью СУБД разработчики следят за всеми изменениями в базах данных. А БД хранят информацию
+                        пользователей: их транзакции и действия.
+                    </p>
+                    <div style="text-align: center;">
+                        <img id="myImg2" src="../images/imgSUBDUser.jpg" width="700px;" alt="Работа СУБД">
+                    </div>
+                    <p class="headingCenter">Введение в PostgreSQL</p>
+                    <p>PostgreSQL является одной из наиболее популярных систем управления базами данных. Сам проект
+                        postgresql эволюционировал из другого проекта, который назывался Ingres. Формально развитие
+                        postgresql началось еще в 1986 году. Тогда он назывался POSTGRES. А в 1996 году проект был
+                        переименован в PostgreSQL, что отражало больший акцент на SQL. И собственно 8 июля 1996 года
+                        состоялся первый релиз продукта.
+                    </p>
+                    <p>
+                        PostgreSQL поддерживается для всех основных операционных систем - Windows, Linux, MacOS.
+                    </p>
+                    <p><span>
+                            Установка PostgreSQL
+                        </span>
+                    </p>
+                    <p>
+                        На странице <a
+                            href="https://www.postgresql.org/download/">https://www.postgresql.org/download/</a> можно
+                        найти ссылки на загрузку различных дистрибутивов для различных операционных систем. В частности,
+                        для загрузки дистрибутива для Windows, а также для MacOS надо перейти на страницу <a
+                            href="https://www.enterprisedb.com/downloads/postgres-postgresql-downloads">https://www.enterprisedb.com/downloads/postgres-postgresql-downloads</a>
+                        и указать
+                        все необходимые опции для загрузки: версию postgres и операционную систему.
+                    </p>
+                    <div style="text-align: center;">
+                        <img id="myImg3" src="../images/imgPost1.png" width="600px;">
+                    </div>
+                    <p>
+                        Тут же можно найти дитрибутивы и для других систем. <br>Запустим программу установки:
+                    </p>
+                    <div style="text-align: center;">
+                        <img id="myImg4" src="../images/imgPost2.png" width="600px;">
+                    </div>
+                    <p>На следующем экране необходимо будет указать папку для установки. Оставим папку по умолчанию и
+                        перейдем к следующему шагу:</p>
+                    <div style="text-align: center;">
+                        <img id="myImg5" src="../images/imgPost3.png" width="600px;">
+                    </div>
+                    <p>
+                        Далее будет предложено выбрать компоненты для установки:
+                    </p>
+                    <div style="text-align: center;">
+                        <img id="myImg6" src="../images/imgPost4.png" width="600px;">
+                    </div>
+                    <p>
+                        Оставим все компоненты по умолчанию и перейдем к следующему шагу. Далее будет предложено выбрать
+                        папку, где будут храниться базы данных:
+                    </p>
+                    <div style="text-align: center;">
+                        <img id="myImg7" src="../images/imgPost5.png" width="600px;">
+                    </div>
+                    <p>
+                        Оставим путь по умолчанию и перейдем к следующему шагу. Затем необходимо будет установить пароль
+                        для суперпользователя postgres:
+                    </p>
+                    <div style="text-align: center;">
+                        <img id="myImg8" src="../images/imgPost6.png" width="600px;">
+                    </div>
+                    <p>
+                        При установке запомним пароль, так как он потребуется для подключения к серверу. Затем нужно
+                        будет установить порт, по которому будет запускаться сервер. Можно оставить порт по умолчанию:
+                    </p>
+                    <div style="text-align: center;">
+                        <img id="myImg9" src="../images/imgPost7.png" width="600px;">
+                    </div>
+                    <p>
+                        Далее можно будет установить локаль сервера. Оставим установку по умолчанию:
+                    </p>
+                    <div style="text-align: center;">
+                        <img id="myImg10" src="../images/imgPost8.png" width="600px;">
+                    </div>
+                    <p>
+                        После этого мы увидим сводку по всем настройкам:
+                    </p>
+                    <div style="text-align: center;">
+                        <img id="myImg11" src="../images/imgPost9.png" width="600px;">
+                    </div>
+                    <p>
+                        И если нас все устраивает, то можно нажать на кнопку Next, и начнется установка
+                    </p>
+                    <div style="text-align: center;">
+                        <img id="myImg12" src="../images/imgPost10.png" width="600px;">
+                    </div>
+                    <p>
+                        И после завершения установки мы увидем следующее окно, и для выхода нажмем на кнопку Finish:
+                    </p>
+                    <div style="text-align: center;">
+                        <img id="myImg13" src="../images/imgPost11.png" width="600px;">
+                    </div>
+                    <p>
+                        Таким образом, сервер PostgreSQL установлен, и мы можем начинать с ним работать
+                    </p>
+                    <div id="myModalImg" class="modalImg">
+                        <span class="close">×</span>
+                        <img class="modal-content" id="img01">
+                        <div id="caption"></div>
+                    </div>
+                </div>
+                <div class="btnstransition">
+                    <button onclick="document.location='thirdblocktwopage.html'">Далее</button>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    </div>
+    <script>
+        var modal = document.getElementById('myModalImg');
+
+        var img1 = document.getElementById('myImg1');
+        var img2 = document.getElementById('myImg2');
+        var img3 = document.getElementById('myImg3');
+        var img4 = document.getElementById('myImg4');
+        var img5 = document.getElementById('myImg5');
+        var img6 = document.getElementById('myImg6');
+        var img7 = document.getElementById('myImg7');
+        var img8 = document.getElementById('myImg8');
+        var img9 = document.getElementById('myImg9');
+        var img10 = document.getElementById('myImg10');
+        var img11 = document.getElementById('myImg11');
+        var img12 = document.getElementById('myImg12');
+        var img13 = document.getElementById('myImg13');
+        var modalImg = document.getElementById("img01");
+        var captionText = document.getElementById("caption");
+        img1.onclick = function () {
+            modal.style.display = "block";
+            modalImg.src = this.src;
+            captionText.innerHTML = this.alt;
+        }
+        img2.onclick = function () {
+            modal.style.display = "block";
+            modalImg.src = this.src;
+            captionText.innerHTML = this.alt;
+        }
+        img3.onclick = function () {
+            modal.style.display = "block";
+            modalImg.src = this.src;
+            captionText.innerHTML = this.alt;
+        }
+        img4.onclick = function () {
+            modal.style.display = "block";
+            modalImg.src = this.src;
+            captionText.innerHTML = this.alt;
+        }
+        img5.onclick = function () {
+            modal.style.display = "block";
+            modalImg.src = this.src;
+            captionText.innerHTML = this.alt;
+        }
+        img6.onclick = function () {
+            modal.style.display = "block";
+            modalImg.src = this.src;
+            captionText.innerHTML = this.alt;
+        }
+        img7.onclick = function () {
+            modal.style.display = "block";
+            modalImg.src = this.src;
+            captionText.innerHTML = this.alt;
+        }
+        img8.onclick = function () {
+            modal.style.display = "block";
+            modalImg.src = this.src;
+            captionText.innerHTML = this.alt;
+        }
+        img9.onclick = function () {
+            modal.style.display = "block";
+            modalImg.src = this.src;
+            captionText.innerHTML = this.alt;
+        }
+        img10.onclick = function () {
+            modal.style.display = "block";
+            modalImg.src = this.src;
+            captionText.innerHTML = this.alt;
+        }
+        img11.onclick = function () {
+            modal.style.display = "block";
+            modalImg.src = this.src;
+            captionText.innerHTML = this.alt;
+        }
+        img12.onclick = function () {
+            modal.style.display = "block";
+            modalImg.src = this.src;
+            captionText.innerHTML = this.alt;
+        }
+        img13.onclick = function () {
+            modal.style.display = "block";
+            modalImg.src = this.src;
+            captionText.innerHTML = this.alt;
+        }
+
+
+        var span = document.getElementsByClassName("close")[0];
+
+        span.onclick = function () {
+            modal.style.display = "none";
+        }
+    </script>
+
+</body>
+
+</html>

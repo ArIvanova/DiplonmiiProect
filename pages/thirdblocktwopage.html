@@ -1,0 +1,533 @@
+<html>
+
+<head>
+    <meta charset="UTF-8"> <!-- Определяем кодировку символов документа -->
+    <link rel="icon" href="../images/favicon.ico">
+    <title>Создание БД</title> <!-- Задаем заголовок документа -->
+    <link rel="stylesheet" type="text/css" href="style.css"> <!-- Подключаем внешнюю таблицу стилей -->
+    <script src="script.js">
+    </script>
+    <style>
+        body {
+            background-image: linear-gradient(45deg, #dce8dc, #c8f0d0);
+            font-family: "Figtree", sans-serif;
+        }
+
+        .background {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .mainblock {
+            background-color: #edcec5;
+            width: 90%;
+            max-width: 1708px;
+            height: 90%;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .btnstransition button {
+            background-color: #295542;
+            color: white;
+            font-size: 20px;
+            width: 100px;
+            height: 35px;
+            border-radius: 15px;
+            margin-top: 30px;
+            cursor: pointer;
+        }
+
+        .btnstransition {
+            margin-bottom: 20px;
+        }
+
+        .activlink {
+            font-weight: bold;
+            color: white;
+            text-shadow: white 0 0 10px;
+        }
+
+        nav {
+            width: 100%;
+            height: 10%;
+            background-color: #295542;
+            border-radius: 15px 15px 0 0;
+            text-align: center;
+        }
+
+        nav ul {
+            padding: 0;
+            list-style: none;
+            position: relative;
+        }
+
+        nav ul li {
+            display: inline-block;
+
+        }
+
+        nav a {
+            padding: 0 20px;
+            display: block;
+            color: #FFF;
+            font-size: 20px;
+            text-decoration: none;
+            /*line-height: 10%;*/
+        }
+
+        nav a:hover {
+            background-color: #000000;
+            border-radius: 15px;
+            margin-top: 2px;
+            margin-bottom: 2px;
+            font-weight: 600;
+        }
+
+        nav ul ul {
+            display: none;
+            position: absolute;
+            top: 100%;
+            background-color: #295542;
+            border-radius: 15px;
+            text-align: left;
+            z-index: 1;
+
+        }
+
+        nav ul li:hover>ul {
+            display: inherit;
+        }
+
+        nav ul ul li {
+            float: none;
+            display: list-item;
+            position: relative;
+        }
+
+        .verh {
+            align-self: flex-start;
+        }
+
+        ul.breadcrumb {
+            padding: 10px 16px;
+            list-style: none;
+        }
+
+        ul.breadcrumb li {
+            display: inline;
+            font-size: 18px;
+        }
+
+        ul.breadcrumb li+li:before {
+            padding: 8px;
+            color: black;
+            content: "/\00a0";
+        }
+
+        ul.breadcrumb li a {
+            color: #295542;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        ul.breadcrumb li a:hover {
+            color: #214536;
+            text-decoration: underline;
+        }
+
+        .infoblocks {
+            height: 90%;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-y: scroll;
+        }
+
+        div.infotext {
+            background-color: white;
+            border-radius: 15px;
+            width: 90%;
+            padding: 3%;
+            text-align: justify;
+        }
+
+        div.infotext p {
+            font-family: "Figtree", sans-serif;
+            font-size: 20px;
+        }
+
+        span {
+            font-weight: 600;
+        }
+
+        button {
+            background-color: #295542;
+            color: white;
+            font-size: 20px;
+            width: 100px;
+            height: 35px;
+            border-radius: 15px;
+            margin-top: 30px;
+            cursor: pointer;
+        }
+
+        .headingCenter {
+            font-style: italic;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .definition {
+            background-color: #dce8dc;
+            border-left: 6px solid #295542;
+            padding: 5px 20px;
+
+            margin-left: 5%;
+            margin-right: 5%;
+            margin-bottom: 15px;
+        }
+        #myImg1,
+        #myImg2,
+        #myImg3,
+        #myImg4,
+        #myImg5,
+        #myImg6,
+        #myImg7,
+        #myImg8,
+        #myImg9,
+        #myImg10 {
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        #myImg1,
+        #myImg2,
+        #myImg3,
+        #myImg4,
+        #myImg6,
+        #myImg7,
+        #myImg8,
+        #myImg9,
+        #myImg10,
+        #myImg5:hover {
+            opacity: 0.7;
+        }
+
+        .modalImg {
+            display: none;
+            position: fixed;
+            padding-top: 100px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0, 0, 0);
+            background-color: rgba(0, 0, 0, 0.9);
+        }
+
+        .modal-content {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 700px;
+        }
+
+        #caption {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 700px;
+            text-align: center;
+            color: #ccc;
+            padding: 10px 0;
+            height: 150px;
+        }
+        .modal-content,
+        #caption {
+            -webkit-animation-name: zoom;
+            -webkit-animation-duration: 0.6s;
+            animation-name: zoom;
+            animation-duration: 0.6s;
+        }
+
+        @-webkit-keyframes zoom {
+            from {
+                -webkit-transform: scale(0)
+            }
+
+            to {
+                -webkit-transform: scale(1)
+            }
+        }
+
+        @keyframes zoom {
+            from {
+                transform: scale(0)
+            }
+
+            to {
+                transform: scale(1)
+            }
+        }
+
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="background">
+        <div class="mainBlock">
+
+            <nav class="menu">
+                <ul>
+                    <li><a href="../start.html">Главная</a></li>
+                    <li><a href="firstblockonepage.html">Введение в БД</a>
+                        <ul>
+                            <li><a href="firstblockonepage.html">Определение и назначение БД</a></li>
+                            <li><a href="firstblocktwopage.html">ER (entity-relationship)-диаграммы</a></li>
+                            <li><a href="firstblockthreepage.html">Нормализация баз данных</a></li>
+                            <li><a href="firstblocktest.html">Итоговый тест</a></li>
+                            <li><a href="firstblocktasks.html">Практические задания</a></li>
+                            <li><a href="firstblocklinks.html">Полезные материалы</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="secondblockonepage.html">Диаграммы UML</a>
+                        <ul>
+                            <li><a href="secondblockonepage.html">Введение в язык UML</a></li>
+                            <li><a href="secondblocktwopage.html">Основное о диаграммах UML</a></li>
+                            <li><a href="secondblockthreepage.html">Построение диаграмм на ДЭ</a></li>
+                            <li><a href="secondblocktest.html">Итоговый тест</a></li>
+                            <li><a href="secondblocktasks.html">Практические задания</a></li>
+                            <li><a href="secondblocklinks.html">Полезные материалы</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="thirdblockoonepage.html" class="activlink">СУБД</a>
+                        <ul>
+                            <li><a href="thirdblockonepage.html">Определение СУБД</a></li>
+                            <li><a href="thirdblocktwopage.html" class="activlink">Создание БД</a></li>
+                            <li><a href="thirdblockthreepage.html">Написание запросов</a></li>
+                            <li><a href="thirdblocktest.html">Итоговый тест</a></li>
+                            <li><a href="thirdblocktasks.html">Практические задания</a></li>
+                            <li><a href="thirdblocklinks.html">Полезные материалы</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="infoblocks">
+                <div class="verh">
+                    <ul class="breadcrumb">
+                        <li><a href="thirdblockoonepage.html">СУБД</a></li>
+                        <li>Создание БД</li>
+                    </ul>
+                </div>
+                <div class="infotext">
+                    <p>Для упрощения администрирования на сервере postgresql в базовый комплект установки входит такой
+                        инструмент как pgAdmin. Он представляет графический клиент для работы с сервером, через который
+                        мы в удобном виде можем создавать, удалять, изменять базы данных и управлять ими. Так, на
+                        Windows после установки мы можем найти значок pgAdmin в меню Пуск и запустить его:
+                    </p>
+                    <div style="text-align: center;">
+                        <img id="myImg1" src="../images/imgPost12.png" width="300px;">
+                    </div>
+                    <p>
+                        После этого нам откроется следующая программа pgAdmin. При открытии также отображится окно для
+                        ввода пароля для подключения к серверу Postgres:
+                    </p>
+                    <div style="text-align: center;">
+                        <img id="myImg2" src="../images/imgPost13.png" width="600px;">
+                    </div>
+                    <p>
+                        Здесь необходимо ввести пароль для суперпользователя postgres, который был задан при установке
+                        PostgreSQL.<br>После успешного логина нам откроется содержимое сервера:
+                    </p>
+                    <div style="text-align: center;">
+                        <img id="myImg3" src="../images/imgPost14.png" width="600px;">
+                    </div>
+                    <p>
+                        В частности, в узле Databases мы можем увидеть все имеющиеся базы данных. По умолчанию здесь
+                        есть только одна база данных - postgres.<br>Также в правой части мы можем увидеть узел
+                        Login/Group Roles, который предназначен для управления пользователями и их ролями.<br>И третий
+                        узел - Tablespaces позволяет управлять местом хранения файлов баз данных.<br>Теперь создадим
+                        свою базу данных. Для этого нажмем правой кнопкой мыши на узел Databases. И далее в контекстном
+                        меню выберем Create->Database...
+                    </p>
+                    <div style="text-align: center;">
+                        <img id="myImg4" src="../images/imgPost15.png" width="600px;">
+                    </div>
+                    <p>
+                        После этого нам отобразится окно для создания базы данных. Введем название для БД, например,
+                        test1 и нажмем на кнопку "Save":
+                    </p>
+                    <div style="text-align: center;">
+                        <img id="myImg5" src="../images/imgPost16.png" width="600px;">
+                    </div>
+                    <p>
+                        После этого в древовидном меню слева отобразится содержимое созданной базы данных test1:
+                    </p>
+                    <div style="text-align: center;">
+                        <img id="myImg6" src="../images/imgPost17.png" width="600px;">
+                    </div>
+                    <p class="headingCenter">Создание базы данных</p>
+                    <p>
+                        Для создания базы данных используется команда CREATE DATABASE, после которой указывается
+                        название базы данных.
+                    </p>
+                    <p>
+                        Для выполнения запросов будем использовать графический клиент pgAdmin, хотя также можно
+                        использовать консольный клиент psql.
+                    </p>
+                    <p>
+                        Чтобы создать новую базу, данных откроем pgAdmin. В левой части программы выберем какую-нибудь
+                        базу данных, например, стандартную бд postgres, и нажмем на нее правой кнопкой мыши.
+                    </p>
+                    <div style="text-align: center;">
+                        <img id="myImg7" src="../images/imgPost18.png" width="300px;">
+                    </div>
+                    <p>
+                        В появившемся меню выберем пункт Query Tool..., и в центральной части программы откроется поле
+                        для ввода кода SQL. В это поле введем следующий код:
+                    </p>
+                    <div class="definition">
+                        <p>
+                            CREATE DATABASE usersdb;
+                        </p>
+                    </div>
+                    <div style="text-align: center;">
+                        <img id="myImg8" src="../images/imgPost19.png" width="600px;">
+                    </div>
+                    <p>
+                        Для выполнения кода нажмем на значок молнии, и после этого будет создана база данных usersdb.
+                    </p>
+                    <p>
+                        Чтобы увидеть нашу базу данных, нажмем в левой части на узел Databases правой кнопкой мыши и в
+                        контекстном меню выберем Refresh...:
+                    </p>
+                    <div style="text-align: center;">
+                        <img id="myImg9" src="../images/imgPost20.png" width="300px;">
+                    </div>
+                    <p>
+                        Произойдет обновление, и мы увидим созданную базу данных.
+                    </p>
+                    <div style="text-align: center;">
+                        <img id="myImg10" src="../images/imgPost21.png" width="200px;">
+                    </div>
+                    <p>
+                        По умолчанию база является неактивной, поэтому ее значок имеет серый цвет. Но чтобы к ней
+                        подключиться, достаточно нажать на нее и раскрыть ее узел.
+                    </p>
+                    <div id="myModalImg" class="modalImg">
+                        <span class="close">×</span>
+                        <img class="modal-content" id="img01">
+                        <div id="caption"></div>
+                    </div>
+                </div>
+                <div class="btnstransition">
+                    <button onclick="document.location='thirdblockonepage.html'">Назад</button>
+                    <button onclick="document.location='thirdblockthreepage.html'">Далее</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    </div>
+    <script>
+        var modal = document.getElementById('myModalImg');
+
+        var img1 = document.getElementById('myImg1');
+        var img2 = document.getElementById('myImg2');
+        var img3 = document.getElementById('myImg3');
+        var img4 = document.getElementById('myImg4');
+        var img5 = document.getElementById('myImg5');
+        var img6 = document.getElementById('myImg6');
+        var img7 = document.getElementById('myImg7');
+        var img8 = document.getElementById('myImg8');
+        var img9 = document.getElementById('myImg9');
+        var img10 = document.getElementById('myImg10');
+        var modalImg = document.getElementById("img01");
+        var captionText = document.getElementById("caption");
+        img1.onclick = function () {
+            modal.style.display = "block";
+            modalImg.src = this.src;
+            captionText.innerHTML = this.alt;
+        }
+        img2.onclick = function () {
+            modal.style.display = "block";
+            modalImg.src = this.src;
+            captionText.innerHTML = this.alt;
+        }
+        img3.onclick = function () {
+            modal.style.display = "block";
+            modalImg.src = this.src;
+            captionText.innerHTML = this.alt;
+        }
+        img4.onclick = function () {
+            modal.style.display = "block";
+            modalImg.src = this.src;
+            captionText.innerHTML = this.alt;
+        }
+        img5.onclick = function () {
+            modal.style.display = "block";
+            modalImg.src = this.src;
+            captionText.innerHTML = this.alt;
+        }
+        img6.onclick = function () {
+            modal.style.display = "block";
+            modalImg.src = this.src;
+            captionText.innerHTML = this.alt;
+        }
+        img7.onclick = function () {
+            modal.style.display = "block";
+            modalImg.src = this.src;
+            captionText.innerHTML = this.alt;
+        }
+        img8.onclick = function () {
+            modal.style.display = "block";
+            modalImg.src = this.src;
+            captionText.innerHTML = this.alt;
+        }
+        img9.onclick = function () {
+            modal.style.display = "block";
+            modalImg.src = this.src;
+            captionText.innerHTML = this.alt;
+        }
+        img10.onclick = function () {
+            modal.style.display = "block";
+            modalImg.src = this.src;
+            captionText.innerHTML = this.alt;
+        }
+
+        var span = document.getElementsByClassName("close")[0];
+
+        span.onclick = function () {
+            modal.style.display = "none";
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,748 @@
+<html>
+
+<head>
+    <meta charset="UTF-8"> <!-- Определяем кодировку символов документа -->
+    <link rel="icon" href="../images/favicon.ico">
+    <title>Написание запросов</title> <!-- Задаем заголовок документа -->
+    <link rel="stylesheet" type="text/css" href="style.css"> <!-- Подключаем внешнюю таблицу стилей -->
+    <script src="script.js">
+    </script>
+    <style>
+        body {
+            background-image: linear-gradient(45deg, #dce8dc, #c8f0d0);
+            font-family: "Figtree", sans-serif;
+        }
+
+        .background {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .mainblock {
+            background-color: #edcec5;
+            width: 90%;
+            max-width: 1708px;
+            height: 90%;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .activlink {
+            font-weight: bold;
+            color: white;
+            text-shadow: white 0 0 10px;
+        }
+
+        nav {
+            width: 100%;
+            height: 10%;
+            background-color: #295542;
+            border-radius: 15px 15px 0 0;
+            text-align: center;
+        }
+
+        nav ul {
+            padding: 0;
+            list-style: none;
+            position: relative;
+        }
+
+        nav ul li {
+            display: inline-block;
+
+        }
+
+        nav a {
+            padding: 0 20px;
+            display: block;
+            color: #FFF;
+            font-size: 20px;
+            text-decoration: none;
+            /*line-height: 10%;*/
+        }
+
+        nav a:hover {
+            background-color: #000000;
+            border-radius: 15px;
+            margin-top: 2px;
+            margin-bottom: 2px;
+            font-weight: 600;
+        }
+
+        nav ul ul {
+            display: none;
+            position: absolute;
+            top: 100%;
+            background-color: #295542;
+            border-radius: 15px;
+            text-align: left;
+            z-index: 1;
+        }
+
+        nav ul li:hover>ul {
+            display: inherit;
+        }
+
+        nav ul ul li {
+            float: none;
+            display: list-item;
+            position: relative;
+        }
+
+        .verh {
+            align-self: flex-start;
+        }
+
+        ul.breadcrumb {
+            padding: 10px 16px;
+            list-style: none;
+        }
+
+        ul.breadcrumb li {
+            display: inline;
+            font-size: 18px;
+        }
+
+        ul.breadcrumb li+li:before {
+            padding: 8px;
+            color: black;
+            content: "/\00a0";
+        }
+
+        ul.breadcrumb li a {
+            color: #295542;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        ul.breadcrumb li a:hover {
+            color: #214536;
+            text-decoration: underline;
+        }
+
+        .infoblocks {
+            height: 90%;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-y: scroll;
+        }
+
+        div.infotext {
+            background-color: white;
+            border-radius: 15px;
+            width: 90%;
+            padding: 3%;
+            text-align: justify;
+        }
+
+        div.infotext p {
+            font-family: "Figtree", sans-serif;
+            font-size: 20px;
+        }
+
+        span {
+            font-weight: 600;
+        }
+
+        .btnstransition button {
+            background-color: #295542;
+            color: white;
+            font-size: 20px;
+            width: 100px;
+            height: 35px;
+            border-radius: 15px;
+            margin-top: 30px;
+            cursor: pointer;
+        }
+
+        .btnstransition {
+            margin-bottom: 20px;
+        }
+
+        .tab {
+            overflow: hidden;
+            border: 1px solid #ccc;
+            background-color: #dce8dc;
+            text-align: center;
+            max-height: fit-content;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+        }
+
+        /* Style the buttons inside the tab */
+        .tab button {
+            background-color: #dce8dc;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            width: 50%;
+            height: auto;
+            color: #000000;
+            margin-top: 0px;
+            border-bottom-left-radius: 0px;
+            border-bottom-right-radius: 0px;
+            padding: 7px 0;
+            font-size: 20px;
+            font-family: "Figtree", sans-serif;
+        }
+
+        .tab button:hover {
+            background-color: #edcec5;
+        }
+
+
+        .tab button.active {
+            background-color: #5e3a32;
+            color: white;
+        }
+
+        .tabcontent {
+            display: none;
+            padding: 6px 12px;
+            border: 1px solid #ccc;
+            border-top: none;
+            text-align: justify;
+        }
+
+        div.infotext ul {
+            font-family: "Figtree", sans-serif;
+            font-size: 20px;
+        }
+
+        .headingCenter {
+            font-style: italic;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        div.infotext ol {
+            font-family: "Figtree", sans-serif;
+            font-size: 20px;
+        }
+
+        .definition {
+            background-color: #dce8dc;
+            border-left: 6px solid #295542;
+            padding: 5px 20px;
+
+            margin-left: 5%;
+            margin-right: 5%;
+            margin-bottom: 15px;
+        }
+        #myImg1,
+        #myImg2 {
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        #myImg1,
+        #myImg2hover {
+            opacity: 0.7;
+        }
+
+        .modalImg {
+            display: none;
+            position: fixed;
+            padding-top: 100px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0, 0, 0);
+            background-color: rgba(0, 0, 0, 0.9);
+        }
+
+        .modal-content {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 700px;
+        }
+
+        #caption {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 700px;
+            text-align: center;
+            color: #ccc;
+            padding: 10px 0;
+            height: 150px;
+        }
+        .modal-content,
+        #caption {
+            -webkit-animation-name: zoom;
+            -webkit-animation-duration: 0.6s;
+            animation-name: zoom;
+            animation-duration: 0.6s;
+        }
+
+        @-webkit-keyframes zoom {
+            from {
+                -webkit-transform: scale(0)
+            }
+
+            to {
+                -webkit-transform: scale(1)
+            }
+        }
+
+        @keyframes zoom {
+            from {
+                transform: scale(0)
+            }
+
+            to {
+                transform: scale(1)
+            }
+        }
+
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="background">
+        <div class="mainBlock">
+
+            <nav class="menu">
+                <ul>
+                    <li><a href="../start.html">Главная</a></li>
+                    <li><a href="firstblockonepage.html">Введение в БД</a>
+                        <ul>
+                            <li><a href="firstblockonepage.html">Определение и назначение БД</a></li>
+                            <li><a href="firstblocktwopage.html">ER (entity-relationship)-диаграммы</a></li>
+                            <li><a href="firstblockthreepage.html">Нормализация баз данных</a></li>
+                            <li><a href="firstblocktest.html">Итоговый тест</a></li>
+                            <li><a href="firstblocktasks.html">Практические задания</a></li>
+                            <li><a href="firstblocklinks.html">Полезные материалы</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="secondblockonepage.html">Диаграммы UML</a>
+                        <ul>
+                            <li><a href="secondblockonepage.html">Введение в язык UML</a></li>
+                            <li><a href="secondblocktwopage.html">Основное о диаграммах UML</a></li>
+                            <li><a href="secondblockthreepage.html">Построение диаграмм на ДЭ</a></li>
+                            <li><a href="secondblocktest.html">Итоговый тест</a></li>
+                            <li><a href="secondblocktasks.html">Практические задания</a></li>
+                            <li><a href="secondblocklinks.html">Полезные материалы</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="thirdblockoonepage" class="activlink">СУБД</a>
+                        <ul>
+                            <li><a href="thirdblockonepage.html">Определение СУБД</a></li>
+                            <li><a href="thirdblocktwopage.html">Создание БД</a></li>
+                            <li><a href="thirdblockthreepage.html" class="activlink">Написание запросов</a></li>
+                            <li><a href="thirdblocktest.html">Итоговый тест</a></li>
+                            <li><a href="thirdblocktasks.html">Практические задания</a></li>
+                            <li><a href="thirdblocklinks.html">Полезные материалы</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="infoblocks">
+                <div class="verh">
+                    <ul class="breadcrumb">
+                        <li><a href="thirdblockoonepage.html">СУБД</a></li>
+                        <li>Написание запросов</li>
+                    </ul>
+                </div>
+                <div class="infotext">
+                    <div class="tab">
+                        <button class="tablinks" onclick="openElement(event, 'datatypes')">ТИПЫ ДАННЫХ</button>
+                        <button class="tablinks" onclick="openElement(event, 'requests')">ЗАПРОСЫ</button>
+                    </div>
+                    <div id="datatypes" class="tabcontent">
+                        <p>
+                            При определении таблицы для всех ее столбцов необходимо указать тип данных. Тип данных
+                            определяет диапазон значений, которые могут храниться в столбце, сколько они будут занимать
+                            места в памяти. PostgreSQL поддерживает богатую палитру различных типов данных, среди
+                            которые условно можно разделить на подгруппы: числовые, символьные, логические, дата и
+                            время, бинарные и ряд других.
+                        </p>
+                        <p>
+                            <span>
+                                Числовые типы данных
+                            </span>
+                        </p>
+                        <ul>
+                            <li>
+                                <span>serial</span>: представляет автоинкрементирующееся числовое значение, которое
+                                занимает 4
+                                байта и может хранить числа от 1 до 2147483647. Значение данного типа образуется путем
+                                автоинкремента значения предыдущей строки. Поэтому, как правило, данный тип используется
+                                для определения идентификаторов строки.
+                            </li>
+                            <li>
+                                <span>smallserial</span>: представляет автоинкрементирующееся числовое значение, которое
+                                занимает 2 байта и может хранить числа от 1 до 32767. Аналог типа serial для небольших
+                                чисел.
+                            </li>
+                            <li>
+                                <spa>bigserial</spa>: представляет автоинкрементирующееся числовое значение, которое
+                                занимает 8 байт и может хранить числа от 1 до 9223372036854775807. Аналог типа serial
+                                для больших чисел.
+                            </li>
+                            <li>
+                                <span>smallint</span>: хранит числа от -32768 до +32767. Занимает 2 байта. Имеет
+                                псевдоним int2.
+                            </li>
+                            <li>
+                                <span>integer</span>: хранит числа от -2147483648 до +2147483647. Занимает 4 байта.
+                                Имеет псевдонимы int и int4.
+                            </li>
+                            <li>
+                                <span>bigint</span>: хранит числа от -9223372036854775808 до +9223372036854775807.
+                                Занимает 8 байт. Имеет псевдоним int8.
+                            </li>
+                            <li>
+                                <span>numeric</span>: хранит числа с фиксированной точностью, которые могут иметь до
+                                131072 знаков в целой части и до 16383 знаков после запятой.
+                                <p>
+                                    Данный тип может принимать два параметра precision и scale: numeric(precision,
+                                    scale).<br>Параметр precision указывает на максимальное количество цифр, которые
+                                    может хранить число.<br>Параметр scale представляет максимальное количество цифр,
+                                    которые может содержать число после запятой. Это значение должно находиться в
+                                    диапазоне от 0 до значения параметра precision. По умолчанию оно равно
+                                    0.<br>Например, для числа 23.5141 precision равно 6, а scale - 4.
+                                </p>
+
+                            </li>
+                            <li>
+                                <span>decimal</span>: хранит числа с фиксированной точностью, которые могут иметь до
+                                131072 знаков в целой части и до 16383 знаков в дробной части. То же самое, что и
+                                numeric.
+                            </li>
+                            <li>
+                                <span>real</span>: хранит числа с плавающей точкой из диапазона от 1E-37 до 1E+37.
+                                Занимает 4 байта. Имеет псевдоним float4.
+                            </li>
+                            <li>
+                                <span>double precision</span>: хранит числа с плавающей точкой из диапазона от 1E-307 до
+                                1E+308. Занимает 8 байт. Имеет псевдоним float8.
+                            </li>
+                        </ul>
+                        <div class="definition">
+                            <p><span>Пример использования:</span></p>
+                            <ol>
+                                <li>Id SERIAL,</li>
+                                <li>TotalWeight NUMERIC(9,2),</li>
+                                <li>Age INTEGER,</li>
+                                <li>Surplus REAL</li>
+                            </ol>
+                        </div>
+                        <p>
+                            <span>
+                                Типы для работы с валютой (денежными единицами)
+                            </span>
+                        </p>
+                        <p>
+                            Для работы с денежными единицами определен тип <span>money</span>, который может принимать
+                            значения в диапазоне от -92233720368547758.08 до +92233720368547758.07 и занимает 8 байт.
+                        </p>
+                        <p>
+                            <span>
+                                Символьные типы
+                            </span>
+                        </p>
+                        <ul>
+                            <li>
+                                <span>character(n)</span>: представляет строку из фиксированного количества символов. С
+                                помощью параметра задается задается количество символов в строке. Имеет псевдоним
+                                char(n).
+                            </li>
+                            <li>
+                                <span>character varying(n)</span>: представляет строку из переменной длины. С помощью
+                                параметра задается задается максимальное количество символов в строке. Имеет псевдоним
+                                varchar(n).
+                            </li>
+                            <li>
+                                <span>text</span>: представляет текст произвольной длины.
+                            </li>
+                        </ul>
+                        <p>
+                            <span>
+                                Бинарные данные
+                            </span>
+                        </p>
+                        <p>
+                            Для хранения бинарных данных определен тип <span>bytea</span>. Он хранит данные в виде
+                            бинарных строк, которые представляют последовательность октетов или байт.
+                        </p>
+                        <p>
+                            <span>
+                                Типы для работы с датами и временем
+                            </span>
+                        </p>
+                        <ul>
+                            <li>
+                                <span>timestamp</span>: хранит дату и время. Занимает 8 байт. Для дат самое нижнее
+                                значение - 4713 г до н.э., самое верхнее значение - 294276 г н.э.
+                            </li>
+                            <li>
+                                <span>timestamp with time zone</span>: то же самое, что и timestamp, только добавляет
+                                данные о часовом поясе.
+                            </li>
+                            <li>
+                                <span>date</span>: представляет дату от 4713 г. до н.э. до 5874897 г н.э. Занимает 4
+                                байта.
+                            </li>
+                            <li>
+                                <span>time</span>: хранит время с точностью до 1 микросекунды без указания часового
+                                пояса. Принимает значения от 00:00:00 до 24:00:00. Занимает 8 байт.
+                            </li>
+                            <li>
+                                <span>time with time zone</span>: хранит время с точностью до 1 микросекунды с указанием
+                                часового пояса. Принимает значения от 00:00:00+1459 до 24:00:00-1459. Занимает 12 байт.
+                            </li>
+                            <li>
+                                <span>interval</span>: представляет временной интервал. Занимает 16 байт
+                            </li>
+                        </ul>
+                        <p>
+                            <span>
+                                Логический тип
+                            </span>
+                        </p>
+                        <p>
+                            Тип <span>boolean</span> может хранить одно из двух значений: true или false.<br>Вместо true
+                            можно указывать следующие значения: TRUE, 't', 'true', 'y', 'yes', 'on', '1'.<br>Вместо
+                            false можно указывать следующие значения: FALSE, 'f', 'false', 'n', 'no', 'off', '0'.
+                        </p>
+                    </div>
+                    <div id="requests" class="tabcontent">
+                        <p>
+                            Чтобы открыть окно для написания запросов: вначале выбрать в pgAdmin целевую базу данных,
+                            нажать на нее правой кнопкой мыши и в контекстном меню выбрать пункт Query Tool...:
+                        </p>
+                        <div style="text-align: center;">
+                            <img id="myImg1" src="../images/imgPost22.png" width="200px;">
+                        </div>
+                        <p class="headingCenter"><i>Создание таблицы</i></p>
+                        <p>
+                            Для создания таблиц применяется команда CREATE TABLE, после которой указывается название
+                            таблицы. Также с этой командой можно использовать ряд операторов, которые определяют столбцы
+                            таблицы и их атрибуты. Общий синтаксис создания таблицы выглядит следующим образом:
+                        </p>
+                        <div class="definition">
+                            <ol>
+                                <li>CREATE TABLE название_таблицы</li>
+                                <li>(название_столбца1 тип_данных атрибуты_столбца1, </li>
+                                <li> название_столбца2 тип_данных атрибуты_столбца2,</li>
+                                <li>................................................</li>
+                                <li>название_столбцаN тип_данных атрибуты_столбцаN,</li>
+                                <li> атрибуты_таблицы</li>
+                                <li>);</li>
+                            </ol>
+                        </div>
+                        <p>
+                            После названия таблицы в скобках перечисляется спецификация для всех столбцов. Причем для
+                            каждого столбца надо указывается название и тип данных, который он будет представлять. Тип
+                            данных определяет, какие данные (числа, строки и т.д.) может содержать столбец.
+                        </p>
+                        <p>
+                            Пример:
+                        </p>
+                        <div class="definition">
+                            <ol>
+                                <li>CREATE TABLE customers</li>
+                                <li>(</li>
+                                <li>Id SERIAL PRIMARY KEY,</li>
+                                <li>FirstName CHARACTER VARYING(30),</li>
+                                <li>LastName CHARACTER VARYING(30),</li>
+                                <li>Email CHARACTER VARYING(30),</li>
+                                <li>Age INTEGER</li>
+                                <li>);</li>
+                            </ol>
+                        </div>
+                        <p>
+                            В данном случае в таблице Customers определяются пять столбцов: Id, FirstName, LastName,
+                            Age, Email. Первый столбец - Id представляет идентификатор клиента, он служит первичным
+                            ключом и поэтому имеет тип SERIAL. Фактически данный столбец будет хранить числовое значение
+                            1, 2, 3 и т.д., которое для каждой новой строки будет автоматически увеличиваться на
+                            единицу.
+                        </p>
+                        <p>
+                            Следующие три столбца представляют имя, фамилию клиента и его электронный адрес и имеют тип
+                            CHARACTER VARYING(30), то есть представляют строку длиной не более 30 символов.
+                        </p>
+                        <p>
+                            Последний столбец - Age представляет возраст пользователя и имеет тип INTEGER, то есть
+                            хранит числа.
+                        </p>
+                        <div style="text-align: center;">
+                            <img id="myImg2" src="../images/imgPost23.png" width="600px;">
+                        </div>
+                        <p class="headingCenter"><i>Удаление</i></p>
+                        <p>
+                            Для удаления таблиц используется команда DROP TABLE, которая имеет следующий синтаксис:
+                        </p>
+                        <div class="definition">
+                            <p>
+                                1. DROP TABLE table1 [, table2, ...];
+                            </p>
+                        </div>
+                        <p>
+                            Например, удаление таблицы customers:
+                        </p>
+                        <div class="definition">
+                            <p>
+                                1. DROP TABLE customers;
+                            </p>
+                        </div>
+                        <p class="headingCenter">
+                            <i>Изменение таблицы</i>
+                        </p>
+                        <p>
+                            Нередко возникает изменить уже имеющуюся таблицу, в частности, добавить или удалить столбцы,
+                            изменить тип столбцов и т.д.. То есть потребуется изменить определение таблицы. Для этого
+                            применяется выражение ALTER TABLE, которое имеет следующий формальный синтаксис:
+                        </p>
+                        <div class="definition">
+                            <ol>
+                                <li>ALTER TABLE название_таблицы</li>
+                                <li>{ ADD название_столбца тип_данных_столбца [ограничения_столбца] | </li>
+                                <li>DROP COLUMN название_столбца |</li>
+                                <li>ALTER COLUMN название_столбца параметры_столбца |</li>
+                                <li>ADD [CONSTRAINT] определение_ограничения |</li>
+                                <li>DROP [CONSTRAINT] имя_ограничения}</li>
+                            </ol>
+                        </div>
+                        <p>
+                            Некоторые возможности по изменению таблиц:
+                        </p>
+                        <p><span><i>Добавление нового столбца</i></span></p>
+                        <div class="definition">
+                            <ol>
+                                <li>ALTER TABLE Customers</li>
+                                <li>ADD Phone CHARACTER VARYING(20) NULL;</li>
+                            </ol>
+                        </div>
+                        <p><span><i>Удаление столбца</i></span></p>
+                        <div class="definition">
+                            <ol>
+                                <li>ALTER TABLE Customers</li>
+                                <li>DROP COLUMN Address;</li>
+                            </ol>
+                        </div>
+                        <p><span><i>Изменение типа столбца</i></span></p>
+                        <div class="definition">
+                            <ol>
+                                <li>ALTER TABLE Customers</li>
+                                <li>ALTER COLUMN FirstName TYPE VARCHAR(50);</li>
+                            </ol>
+                        </div>
+                        <p><span><i>Изменение ограничений столбца</i></span></p>
+                        <div class="definition">
+                            <ol>
+                                <li>ALTER TABLE Customers</li>
+                                <li>ALTER COLUMN FirstName</li>
+                                <li>SET NOT NULL;</li>
+                            </ol>
+                        </div>
+                        <p><span><i>Изменение ограничений таблицы</i></span></p>
+                        <div class="definition">
+                            <ol>
+                                <li>ALTER TABLE Customers</li>
+                                <li>ADD PRIMARY KEY (Id);</li>
+                            </ol>
+                        </div>
+                        <p><span><i>Переименование столбца и таблицы</i></span></p>
+                        <div class="definition">
+                            <ol>
+                                <li>ALTER TABLE Customers</li>
+                                <li>RENAME COLUMN Address TO City;</li>
+                            </ol>
+                        </div>
+                        <div class="definition">
+                            <ol>
+                                <li>ALTER TABLE Customers</li>
+                                <li>RENAME TO Users;</li>
+                            </ol>
+                        </div>
+                        <div id="myModalImg" class="modalImg">
+                            <span class="close">×</span>
+                            <img class="modal-content" id="img01">
+                            <div id="caption"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="btnstransition">
+                    <button onclick="document.location='thirdblocktwopagehtml'">Назад</button>
+                    <button onclick="document.location='thirdblocktest.html'">К тесту</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    </div>
+    <script>
+        function openElement(evt, elemName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(elemName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+
+        var modal = document.getElementById('myModalImg');
+
+        var img1 = document.getElementById('myImg1');
+        var img2 = document.getElementById('myImg2');
+        var modalImg = document.getElementById("img01");
+        var captionText = document.getElementById("caption");
+        img1.onclick = function () {
+            modal.style.display = "block";
+            modalImg.src = this.src;
+            captionText.innerHTML = this.alt;
+        }
+        img2.onclick = function () {
+            modal.style.display = "block";
+            modalImg.src = this.src;
+            captionText.innerHTML = this.alt;
+        }
+
+        var span = document.getElementsByClassName("close")[0];
+
+        span.onclick = function () {
+            modal.style.display = "none";
+        }
+
+    </script>
+</body>
+
+</html>

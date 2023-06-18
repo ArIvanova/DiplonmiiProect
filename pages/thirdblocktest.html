@@ -1,0 +1,428 @@
+<html>
+
+<head>
+  <meta charset="UTF-8"> <!-- Определяем кодировку символов документа -->
+  <link rel="icon" href="../images/favicon.ico">
+  <title>Тест по третьему блоку</title> <!-- Задаем заголовок документа -->
+  <link rel="stylesheet" type="text/css" href="style.css"> <!-- Подключаем внешнюю таблицу стилей -->
+  <script>
+    function testCount() {
+      const
+        test = document.querySelector(".test"), //поиск по страницу элемента с классом .test
+        questionsCount = test.querySelectorAll("ul").length, //подсчет количества вопросов
+        checked = test.querySelectorAll("input:checked"), //поиск всех ответов, которые выбрал пользователь
+        checkedCount = checked.length, //подсчет выбранных ответов
+        //поиск на странице выбранных пользователей ответов, но с классом right (правильный ответ)
+        right = test.querySelectorAll("li.right input:checked"),
+        rightCount = right.length //подсчет правильных ответов
+        ;
+        //вывод модального окна с результатом
+      alert(`Вопросов в тесте: ${questionsCount}
+Верных ответов: ${rightCount}, процент выполнения: ${(rightCount / questionsCount * 100).toFixed(0)}%
+`)
+    }
+  </script>
+  <style>
+    body {
+      background-image: linear-gradient(45deg, #dce8dc, #c8f0d0);
+      font-family: "Figtree", sans-serif;
+    }
+
+    .background {
+      height: 100%;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .mainblock {
+      background-color: #edcec5;
+      width: 90%;
+      max-width: 1708px;
+      height: 90%;
+      border-radius: 15px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .activlink {
+      font-weight: bold;
+      color: white;
+      text-shadow: white 0 0 10px;
+    }
+
+    nav {
+      width: 100%;
+      height: 10%;
+      background-color: #295542;
+      border-radius: 15px 15px 0 0;
+      text-align: center;
+    }
+
+    nav ul {
+      padding: 0;
+      list-style: none;
+      position: relative;
+    }
+
+    nav ul li {
+      display: inline-block;
+
+    }
+
+    nav a {
+      padding: 0 20px;
+      display: block;
+      color: #FFF;
+      font-size: 20px;
+      text-decoration: none;
+      /*line-height: 10%;*/
+    }
+
+    nav a:hover {
+      background-color: #000000;
+      border-radius: 15px;
+      margin-top: 2px;
+      margin-bottom: 2px;
+      font-weight: 600;
+    }
+
+    nav ul ul {
+      display: none;
+      position: absolute;
+      top: 100%;
+      background-color: #295542;
+      border-radius: 15px;
+      text-align: left;
+
+    }
+
+    nav ul li:hover>ul {
+      display: inherit;
+    }
+
+    nav ul ul li {
+      float: none;
+      display: list-item;
+      position: relative;
+    }
+
+    .verh {
+      align-self: flex-start;
+    }
+
+    ul.breadcrumb {
+      padding: 10px 16px;
+      list-style: none;
+    }
+
+    ul.breadcrumb li {
+      display: inline;
+      font-size: 18px;
+    }
+
+    ul.breadcrumb li+li:before {
+      padding: 8px;
+      color: black;
+      content: "/\00a0";
+    }
+
+    ul.breadcrumb li a {
+      color: #295542;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    ul.breadcrumb li a:hover {
+      color: #214536;
+      text-decoration: underline;
+    }
+
+    .infoblocks {
+      height: 90%;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow-y: scroll;
+    }
+
+    div.infotext {
+      background-color: white;
+      border-radius: 15px;
+      width: 90%;
+      padding: 3%;
+      text-align: justify;
+    }
+
+    div.infotext p {
+      font-family: "Figtree", sans-serif;
+      font-size: 20px;
+    }
+
+    div.infotext ul {
+      font-family: "Figtree", sans-serif;
+      font-size: 20px;
+    }
+
+    div.infotext ol {
+      font-family: "Figtree", sans-serif;
+      font-size: 20px;
+    }
+
+    span {
+      font-weight: 600;
+    }
+
+    button {
+      background-color: #295542;
+      color: white;
+      font-size: 20px;
+      width: 140px;
+      height: 35px;
+      border-radius: 15px;
+      margin-top: 30px;
+      cursor: pointer;
+    }
+
+    .btnstransition {
+      margin-bottom: 20px;
+    }
+
+    article ol li ul {
+      list-style-type: none;
+    }
+
+    article ol li {
+      margin-top: 10px;
+    }
+
+    .borderquesrion {
+      border: 2px solid #295542;
+      border-radius: 15px;
+      padding-left: 5%;
+      padding-right: 5%;
+      padding-bottom: 10px;
+      margin-bottom: 5px;
+      ;
+    }
+
+    input[type=button] {
+      background-color: #295542;
+      color: white;
+      font-size: 20px;
+      width: 200px;
+      height: 40px;
+      border-radius: 15px;
+      cursor: pointer;
+      float: right
+    }
+    .definition {
+            background-color: #dce8dc;
+            border-left: 6px solid #295542;
+            padding: 5px 20px;
+
+            margin-left: 5%;
+            margin-right: 5%;
+            margin-bottom: 10px;
+            margin-top: 10px;
+        }
+  </style>
+</head>
+
+<body>
+
+  <div class="background">
+    <div class="mainBlock">
+
+      <nav class="menu">
+        <ul>
+          <li><a href="../start.html">Главная</a></li>
+          <li><a href="firstblockonepage.html">Введение в БД</a>
+            <ul>
+              <li><a href="firstblockonepage.html">Определение и назначение БД</a></li>
+              <li><a href="firstblocktwopage.html">ER (entity-relationship)-диаграммы</a></li>
+              <li><a href="firstblockthreepage.html">Нормализация баз данных</a></li>
+              <li><a href="firstblocktest.html">Итоговый тест</a></li>
+              <li><a href="firstblocktasks.html">Практические задания</a></li>
+              <li><a href="firstblocklinks.html">Полезные материалы</a></li>
+            </ul>
+          </li>
+          <li><a href="secondblockonepage.html">Диаграммы UML</a>
+            <ul>
+              <li><a href="secondblockonepage.html">Введение в язык UML</a></li>
+              <li><a href="secondblocktwopage.html">Основное о диаграммах UML</a></li>
+              <li><a href="secondblockthreepage.html">Построение диаграмм на ДЭ</a></li>
+              <li><a href="secondblocktest.html">Итоговый тест</a></li>
+              <li><a href="secondblocktasks.html">Практические задания</a></li>
+              <li><a href="secondblocklinks.html">Полезные материалы</a></li>
+            </ul>
+          </li>
+          <li><a href="thirdblockoonepage" class="activlink">СУБД</a>
+            <ul>
+                <li><a href="thirdblockonepage.html">Определение СУБД</a></li>
+                <li><a href="thirdblocktwopage.html">Создание БД</a></li>
+                <li><a href="thirdblockthreepage.html">Написание запросов</a></li>
+                <li><a href="thirdblocktest.html" class="activlink">Итоговый тест</a></li>
+                <li><a href="thirdblocktasks.html">Практические задания</a></li>
+                <li><a href="thirdblocklinks.html">Полезные материалы</a></li>
+            </ul>
+        </li>
+        </ul>
+      </nav>
+
+      <div class="infoblocks">
+        <div class="verh">
+          <ul class="breadcrumb">
+            <li><a href="thirdblockonepage.html">СУБД</a></li>
+            <li>Итоговый тест</li>
+          </ul>
+        </div>
+        <div class="infotext">
+          <article class="test">
+            <ol>
+              <diV class="borderquesrion">
+                <li>Система управления базами данных (СУБД) — это
+                  <ul>
+                    <li class="right"><label><input type="radio" name="q1">набор инструментов, которые позволяют управлять базами данных: </label></li>
+                    <li><label><input type="radio" name="q1">программа для структурированного хранения различных баз данных</label></li>
+                    <li><label><input type="radio" name="q1">программа, позволяющая отслеживать к каким БД принадлежат таблицы</label></li>
+                    <li><label><input type="radio" name="q1">набор инструментов, которые позволяют управлять диаграммами UML:</label></li>
+                  </ul>
+                </li>
+              </diV>
+
+              <diV class="borderquesrion">
+                <li>Что из перечисленного не относится к назначениям СУБД
+                  <ul>
+                    <li><label><input type="radio" name="q2">держать данные в структурированном виде и необходимом формате;</label></li>
+                    <li class="right"><label><input type="radio" name="q2">давать возможность абсолютно любому пользователю изменять и хранить данные любого пользователя</label></li>
+                    <li><label><input type="radio" name="q2">загружать и сортировать данные с помощью фильтров;</label>
+                    </li>
+                    <li><label><input type="radio" name="q2">делать резервные копии, восстанавливать базы данных после сбоев и поддерживать общую целостность</label></li>
+                  </ul>
+                </li>
+              </diV>
+
+              <diV class="borderquesrion">
+                <li>Для каких операционных систем поддерживает PostgreSQL? 
+                  <ul>
+                    <li class="right"><label><input type="radio" name="q3">Windows, Linux, MacOS</label></li>
+                    <li><label><input type="radio" name="q3">Windows, Android, MacOS</label></li>
+                    <li><label><input type="radio" name="q3">РЕД ОС, Linux, MacOS</label></li>
+                    <li><label><input type="radio" name="q3">Windows, Linux, Debian</label></li>
+                  </ul>
+                </li>
+              </diV>
+
+              <diV class="borderquesrion">
+                <li>Какая команда используется для создания БД?
+                  <ul>
+                    <li><label><input type="radio" name="q4">CREATE TABLE</label></li>
+                    <li class="right"><label><input type="radio" name="q4">CREATE DATABASE</label></li>
+                    <li><label><input type="radio" name="q4">ALTER DATABASE</label></li>
+                    <li><label><input type="radio" name="q4">ALTER TABLE</label></li>
+                  </ul>
+                </li>
+              </diV>
+
+              <diV class="borderquesrion">
+                <li>О каком числовом типе данных идет речь: «хранит числа от -2147483648 до +2147483647. Занимает 4 байта.»
+                  <ul>
+                    <li><label><input type="radio" name="q5">Serial</label></li>
+                    <li><label><input type="radio" name="q5">Numeric</label></li>
+                    <li><label><input type="radio" name="q5">Decimal</label></li>
+                    <li class="right"><label><input type="radio" name="q5">Integer </label></li>
+                  </ul>
+                </li>
+              </diV>
+
+              <diV class="borderquesrion">
+                <li>Какого символьного типа данных не существует в Postgre?
+                  <ul>
+                    <li><label><input type="radio" name="q6">char(n)</label></li>
+                    <li class="right"><label><input type="radio" name="q6">nchar(n)</label></li>
+                    <li><label><input type="radio" name="q6">varchar(n)</label></li>
+                    <li><label><input type="radio" name="q6">text</label></li>
+                  </ul>
+                </li>
+              </diV>
+
+              <diV class="borderquesrion">
+                <li>Какая команда используется для удаления таблицы?
+                  <ul>
+                    <li><label><input type="radio" name="q7">DELETE TABLE</label></li>
+                    <li class="right"><label><input type="radio" name="q7">DROP TABLE</label></li>
+                    <li><label><input type="radio" name="q7">REMOVE TABLE</label></li>
+                    <li><label><input type="radio" name="q7">CLEAR TABLE</label></li>
+                  </ul>
+                </li>
+              </diV>
+
+              <diV class="borderquesrion">
+                <li>О чем говорит следующий запрос:
+                    <div class="definition">
+                        <ol>
+                            <li>ALTER TABLE Customers</li>
+                            <li>ADD Phone CHARACTER VARYING(20) NULL;</li>
+                        </ol>
+                    </div>
+                  <ul>
+                    <li><label><input type="radio" name="q8">Создание таблицы «Customers» с атрибутом «Phone»</label></li>
+                    <li><label><input type="radio" name="q8">Удаление атрибута «Phone» из таблицы «Customers»</label></li>
+                    <li class="right"><label><input type="radio" name="q8">Добавление в таблицу «Customers» атрибута «Phone»</label></li>
+                    <li><label><input type="radio" name="q8">Изменение типа атрибута «Phone» в таблице «Customers»</label></li>
+                  </ul>
+                </li>
+              </diV>
+
+              <diV class="borderquesrion">
+                <li>О чем говорит следующий запрос?
+                    <div class="definition">
+                        <ol>
+                            <li>ALTER TABLE Customers</li>
+                            <li>ALTER COLUMN FirstName TYPE VARCHAR(50);</li>
+                        </ol>
+                    </div>
+                  <ul>
+                    <li><label><input type="radio" name="q9">Создание таблицы «Customers» с атрибутом «FirstName»</label></li>
+                    <li><label><input type="radio" name="q9">Удаление атрибута «FirstName» из таблицы «Customers»</label></li>
+                    <li><label><input type="radio" name="q9">Добавление в таблицу «Customers» атрибута «FirstName»</label></li>
+                    <li class="right"><label><input type="radio" name="q9">Изменение типа атрибута «FirstName Phone» в таблице «Customers»</label></li>
+                  </ul>
+                </li>
+              </diV>
+
+              <diV class="borderquesrion">
+                <li>Ключевым словом при переименование таблиц/столбцов является слово …
+                  <ul>
+                    <li><label><input type="radio" name="q10">Change</label></li>
+                    <li><label><input type="radio" name="q10">Transform</label></li>
+                    <li class="right"><label><input type="radio" name="q10">Rename</label></li>
+                    <li><label><input type="radio" name="q10">Modify</label></li>
+                  </ul>
+                </li>
+              </diV>
+
+            </ol>
+          </article>
+
+          <input type="button" value="Посчитать" onclick="testCount( )">
+
+        </div>
+        <div class="btnstransition">
+          <button onclick="document.location='thirdblockonepage.html'">К теории</button>
+          <button onclick="document.location='thirdblocktasks.html'">К заданиям</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+</body>
+
+</html>
